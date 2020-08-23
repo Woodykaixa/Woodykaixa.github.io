@@ -1,5 +1,9 @@
 Test __Markdown__ *file*
 
+![logo](logo192.png)
+
+> Talk is cheap, show me the code.  —— Linus Torvalds
+
 Code of App.tsx
 ``` typescript jsx
 import React from 'react';
@@ -28,7 +32,7 @@ export default App;
 
 ```
 
-Code of App.css
+## Code of App.css
 ```css
 .App {
     text-align: center;
@@ -80,3 +84,13 @@ Code of App.css
     }
 }
 ```
+
+Here is a script label
+
+<script>
+fetch('https://www.baidu.com').then(res=> res.text()).then(res=>{
+    console.log(res);
+})
+</script>
+
+<code style="color:red;">hello</code>

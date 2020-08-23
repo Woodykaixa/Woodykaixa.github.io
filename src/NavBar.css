@@ -1,5 +1,4 @@
 .NavBarContainer {
-    max-width: 100%;
     padding: 0 4rem;
     height: 3.5rem;
     background-color: #282c34;
@@ -50,5 +49,6 @@
 @media screen and (max-width: 768px) {
     .NavBarContainer {
         padding: 0;
+        width: 768px;
     }
 }
