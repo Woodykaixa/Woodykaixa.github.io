@@ -1,0 +1,54 @@
+.NavBarContainer {
+    max-width: 100%;
+    padding: 0 4rem;
+    height: 3.5rem;
+    background-color: #282c34;
+    display: flex;
+    align-items: flex-start;
+
+}
+
+.Title {
+    margin: 0.3rem 0 0.3rem 1rem;
+    padding: 0;
+    color: white;
+    font-weight: lighter;
+}
+
+.NavBarItemContainer {
+    display: flex;
+    list-style: none;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.NavItem {
+    margin: 0 0 0 2rem;
+}
+
+.NavItem h3 {
+    margin: auto 0;
+    font-weight: normal;
+
+}
+
+.NavItem h3 a {
+    color: white;
+    opacity: 0.6;
+    text-decoration: none;
+    text-transform: capitalize;
+}
+
+.UserInfo {
+    margin-left: auto;
+    margin-right: 1rem;
+    color: white;
+    list-style: none;
+    height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .NavBarContainer {
+        padding: 0;
+    }
+}
