@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {NavBar} from "./NavBar";
+import {MarkdownReader} from "./MarkdownReader";
 
 function App() {
     let sites = [
@@ -13,7 +14,7 @@ function App() {
         <div className="App">
             <NavBar items={sites} title="Kaixa's Site"/>
             <div className="MainContent">
-
+                <MarkdownReader/>
             </div>
         </div>
     );

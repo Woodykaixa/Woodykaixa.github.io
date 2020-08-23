@@ -20,6 +20,7 @@ class NavBarItem extends React.Component<NavBarItemProp, any> {
         return (
             <li className="NavItem">
                 <h3>
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a href="#" target="_self" rel="noopener noreferrer"
                        onClick={this.handleClick}>
                         {this.props.name}
