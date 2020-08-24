@@ -1,14 +1,10 @@
 import React from "react";
 import "./NavBar.css";
+import {Link} from 'react-router-dom';
 
 interface NavBarItemProp {
     name: string,
     link: string
-}
-
-export interface NavBarProps {
-    items: NavBarItemProp[],
-    title: string
 }
 
 class NavBarItem extends React.Component<NavBarItemProp, any> {
@@ -31,17 +27,61 @@ class NavBarItem extends React.Component<NavBarItemProp, any> {
     }
 }
 
-class UserInfo extends React.Component<any, any> {
+interface UserInfoProps {
+    loggedIn: boolean,
+    showingLogin: boolean,
+    onPageChanged: (showLogin: boolean) => void
+}
+
+class UserInfo extends React.Component<UserInfoProps, any> {
+
+    toLogin = () => {
+        this.props.onPageChanged(true);
+    }
+
+    toRegister = () => {
+        this.props.onPageChanged(false);
+    }
+
     render() {
+        let authButton;
+        if (this.props.loggedIn) {
+            authButton = <Link to='/logout'> 退出登录 </Link>;
+        } else if (this.props.showingLogin) {
+            authButton = <Link to="/register" onClick={this.toRegister}>去注册</Link>;
+        } else {
+            authButton = <Link to="/login" onClick={this.toLogin}>去登录</Link>;
+        }
+
         return (
             <ul className="UserInfo">
-                <li>你好，kaixa</li>
+                <li>{authButton}</li>
             </ul>
         );
     }
 }
 
-export class NavBar extends React.Component<NavBarProps, any> {
+export interface NavBarProps {
+    items: NavBarItemProp[],
+    title: string,
+    loggedIn: boolean
+
+}
+
+interface NavBarState {
+    showingLoginPage: boolean
+}
+
+export class NavBar extends React.Component<NavBarProps, NavBarState> {
+    constructor(props: NavBarProps) {
+        super(props);
+        this.state = {showingLoginPage: true};
+    }
+
+    handleShowingPageChanged = (showLogin: boolean) => {
+        this.setState({showingLoginPage: showLogin});
+    }
+
     render() {
         return (
             <div className="NavBarContainer">
@@ -51,7 +91,8 @@ export class NavBar extends React.Component<NavBarProps, any> {
                                                                         link={value.link}
                                                                         key={index}/>)}
                 </ul>
-                <UserInfo/>
+                <UserInfo loggedIn={this.props.loggedIn} showingLogin={this.state.showingLoginPage}
+                          onPageChanged={this.handleShowingPageChanged}/>
             </div>);
     }
 }
