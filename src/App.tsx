@@ -4,7 +4,7 @@ import {NavBar} from "./NavBar";
 import {DocPage} from "./index/DocPage";
 import {LoginPage} from "./login/LoginPage";
 import {LogoutPage} from "./logout/LogoutPage";
-import {RegisterPage} from "./RegisterPage";
+import {RegisterPage} from "./register/RegisterPage";
 import {Route, BrowserRouter, Switch} from "react-router-dom";
 
 interface AppNavBarSiteItem {
