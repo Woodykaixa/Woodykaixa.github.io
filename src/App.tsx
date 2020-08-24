@@ -1,9 +1,9 @@
 import React from 'react';
 import './App.css';
 import {NavBar} from "./NavBar";
-import {DocPage} from "./DocPage";
-import {LoginPage} from "./LoginPage";
-import {LogoutPage} from "./LogoutPage";
+import {DocPage} from "./index/DocPage";
+import {LoginPage} from "./login/LoginPage";
+import {LogoutPage} from "./logout/LogoutPage";
 import {RegisterPage} from "./RegisterPage";
 import {Route, BrowserRouter, Switch} from "react-router-dom";
 

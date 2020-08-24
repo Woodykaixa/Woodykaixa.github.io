@@ -1,6 +1,6 @@
 import React from 'react';
 import './LoginPage.css';
-import logo from './logo.svg';
+import logo from '../logo.svg';
 import {Redirect} from 'react-router-dom';
 
 
