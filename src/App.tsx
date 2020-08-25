@@ -5,6 +5,7 @@ import {DocPage} from "./index/DocPage";
 import {LoginPage} from "./login/LoginPage";
 import {LogoutPage} from "./logout/LogoutPage";
 import {RegisterPage} from "./register/RegisterPage";
+import {Footer} from "./Footer";
 import {Route, BrowserRouter, Switch} from "react-router-dom";
 
 interface AppNavBarSiteItem {
@@ -13,20 +14,22 @@ interface AppNavBarSiteItem {
 }
 
 interface AppState {
-    sites: AppNavBarSiteItem[], // 导航栏显示的链接
+    navSites: AppNavBarSiteItem[], // 导航栏显示的链接
     isLoggedInUser: boolean, // 当前用户已登录
+    footerSites: string[] // 底部页脚显示的链接
 }
 
 export class App extends React.Component<any, AppState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            sites: [
+            navSites: [
                 {name: 'baidu', link: 'https://www.baidu.com'},
                 {name: 'github', link: 'https://github.com'},
                 {name: 'bjutlab', link: 'https://www.bjutlab.cn'},
             ],
-            isLoggedInUser: false
+            isLoggedInUser: false,
+            footerSites: ['Copyright ©2020 Woodykaixa. All rights reserved.', '项目仓库', '京ICP备20006005号']
         }
     }
 
@@ -42,7 +45,7 @@ export class App extends React.Component<any, AppState> {
         return (
             <div className="App">
                 <BrowserRouter>
-                    <NavBar items={this.state.sites} loggedIn={this.state.isLoggedInUser}
+                    <NavBar items={this.state.navSites} loggedIn={this.state.isLoggedInUser}
                             title="Kaixa's Site"/>
                     <div className="MainContent">
                         <Switch>
@@ -62,6 +65,7 @@ export class App extends React.Component<any, AppState> {
                             </Route>
                         </Switch>
                     </div>
+                    <Footer sites={this.state.footerSites}/>
                 </BrowserRouter>
             </div>
         );

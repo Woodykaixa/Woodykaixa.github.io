@@ -9,7 +9,9 @@ interface DocProps {
 export class DocPage extends React.Component<DocProps, any> {
     render() {
         if (this.props.loggedIn)
-            return <MarkdownReader/>;
+            return (
+                <MarkdownReader/>
+            );
         return <Redirect to='/login'/>;
     }
 }
