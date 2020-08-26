@@ -16,7 +16,9 @@ interface AppNavBarSiteItem {
 interface AppState {
     navSites: AppNavBarSiteItem[], // 导航栏显示的链接
     isLoggedInUser: boolean, // 当前用户已登录
-    footerSites: string[] // 底部页脚显示的链接
+    footerSites: string[], // 底部页脚显示的链接
+    width: number, // document.body.clientWidth
+    height: number // document.body.clientHeight
 }
 
 export class App extends React.Component<any, AppState> {
@@ -29,7 +31,15 @@ export class App extends React.Component<any, AppState> {
                 {name: 'bjutlab', link: 'https://www.bjutlab.cn'},
             ],
             isLoggedInUser: false,
-            footerSites: ['Copyright ©2020 Woodykaixa. All rights reserved.', '项目仓库', '京ICP备20006005号']
+            footerSites: ['Copyright ©2020 Woodykaixa. All rights reserved.', '项目仓库', '京ICP备20006005号'],
+            width: document.body.clientWidth,
+            height: document.body.clientHeight
+        }
+        window.onresize = () => {
+            this.setState({
+                width: document.body.clientWidth,
+                height: document.body.clientHeight
+            });
         }
     }
 
@@ -46,12 +56,12 @@ export class App extends React.Component<any, AppState> {
             <div className="App">
                 <BrowserRouter>
                     <NavBar items={this.state.navSites} loggedIn={this.state.isLoggedInUser}
-                            title="Kaixa's Site"/>
+                            title="Kaixa's Site" width={this.state.width}/>
                     <div className="MainContent">
                         <Switch>
                             <Route path="/login">
                                 <LoginPage loggedIn={this.state.isLoggedInUser}
-                                           loginFunction={this.userLogin}/>
+                                           loginFunction={this.userLogin} width={this.state.width}/>
                             </Route>
                             <Route path="/logout">
                                 <LogoutPage loggedIn={this.state.isLoggedInUser}

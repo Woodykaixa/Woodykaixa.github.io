@@ -2,6 +2,7 @@ import React from 'react';
 import './LoginPage.css';
 import logo from '../logo.svg';
 import {Redirect} from 'react-router-dom';
+import {isLargeScreen} from "../common/common";
 
 
 interface InputComponentProps {
@@ -43,7 +44,8 @@ class InputComponent extends React.Component<InputComponentProps, InputComponent
 
 interface LoginProps {
     loggedIn: boolean,
-    loginFunction: () => void;
+    loginFunction: () => void,
+    width: number
 }
 
 export class LoginPage extends React.Component<LoginProps, any> {
@@ -58,9 +60,13 @@ export class LoginPage extends React.Component<LoginProps, any> {
             return <Redirect to='/'/>;
         return (
             <div className="LoginFormContainer">
-                <aside className="ImgArea">
-                    <img src={logo} alt="tmp logo"/>
-                </aside>
+                {
+                    isLargeScreen(this.props.width) ?
+                        <aside className="ImgArea">
+                            <img src={logo} alt="tmp logo"/>
+                        </aside>
+                        : null
+                }
                 <form className="LoginForm" onSubmit={this.onSubmit}>
                     <h3>登录</h3>
                     <InputComponent name="name" placeholder="用户名"/>

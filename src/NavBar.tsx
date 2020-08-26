@@ -1,6 +1,7 @@
 import React from "react";
 import "./NavBar.css";
 import {Link} from 'react-router-dom';
+import {isLargeScreen} from "./common/common";
 
 interface NavBarItemProp {
     name: string,
@@ -23,7 +24,7 @@ class NavBarItem extends React.Component<NavBarItemProp, any> {
                     </a>
                 </h3>
             </li>
-        )
+        );
     }
 }
 
@@ -64,35 +65,74 @@ class UserInfo extends React.Component<UserInfoProps, any> {
 export interface NavBarProps {
     items: NavBarItemProp[],
     title: string,
-    loggedIn: boolean
+    loggedIn: boolean,
+    width: number
 
 }
 
 interface NavBarState {
-    showingLoginPage: boolean
+    showingLoginPage: boolean,
+    showNavBarContent: boolean
 }
 
 export class NavBar extends React.Component<NavBarProps, NavBarState> {
     constructor(props: NavBarProps) {
         super(props);
-        this.state = {showingLoginPage: true};
+        this.state = {showingLoginPage: true, showNavBarContent: false};
     }
 
     handleShowingPageChanged = (showLogin: boolean) => {
         this.setState({showingLoginPage: showLogin});
     }
 
+    onToggleButtonClick = () => {
+        let newShowingState = !this.state.showNavBarContent;
+        this.setState({showNavBarContent: newShowingState});
+    }
+
     render() {
+        let toggleButton = isLargeScreen(this.props.width) ? null :
+            <button className="ToggleButton" onClick={this.onToggleButtonClick}/>;
+
+        let NavBarContent;
+        if (isLargeScreen(this.props.width)) {
+            NavBarContent = (
+                <div className="NavBarContentContainer">
+                    <ul className="NavBarSiteItemContainer">
+                        {this.props.items.map((value, index) =>
+                            <NavBarItem name={value.name} link={value.link} key={index}/>)}
+                    </ul>
+                    <UserInfo loggedIn={this.props.loggedIn}
+                              showingLogin={this.state.showingLoginPage}
+                              onPageChanged={this.handleShowingPageChanged}/>
+                </div>
+            );
+        } else if (this.state.showNavBarContent) {
+            NavBarContent = (
+                <ul>
+                    {this.props.items.map((value, index) =>
+                        <NavBarItem name={value.name} link={value.link} key={index}/>)}
+                    <li>
+                        <UserInfo loggedIn={this.props.loggedIn}
+                                  showingLogin={this.state.showingLoginPage}
+                                  onPageChanged={this.handleShowingPageChanged}/>
+                    </li>
+                </ul>
+            );
+        }
+
         return (
             <div className="NavBarContainer">
-                <h1 className="Title">{this.props.title}</h1>
-                <ul className="NavBarItemContainer">
-                    {this.props.items.map((value, index) => <NavBarItem name={value.name}
-                                                                        link={value.link}
-                                                                        key={index}/>)}
-                </ul>
-                <UserInfo loggedIn={this.props.loggedIn} showingLogin={this.state.showingLoginPage}
-                          onPageChanged={this.handleShowingPageChanged}/>
-            </div>);
+                <div className="NavBarMain">
+                    <h1 className="Title">{this.props.title}</h1>
+                    {isLargeScreen(this.props.width) ? NavBarContent : toggleButton}
+                </div>
+                {isLargeScreen(this.props.width) ? null : NavBarContent}
+            </div>
+        );
     }
+
+    componentDidMount() {
+    }
+
 }
