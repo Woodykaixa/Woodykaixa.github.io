@@ -1,21 +1,24 @@
 import React from "react";
 import "./NavBar.css";
 import {Link} from 'react-router-dom';
-import {isLargeScreen} from "./common/common";
+import {ResponsiveComponentProps} from "./common/common";
 
-interface NavBarItemProp {
+interface NavBarItemProps {
     name: string,
     link: string
 }
 
-class NavBarItem extends React.Component<NavBarItemProp, any> {
+interface ResponsiveNavBarItemProp extends ResponsiveComponentProps, NavBarItemProps {
+}
+
+class NavBarItem extends React.Component<ResponsiveNavBarItemProp, any> {
     handleClick = () => {
         alert("点个锤子，还没做完呢");
     }
 
     render() {
         return (
-            <li className="NavItem">
+            <li className={this.props.isLargeScreen ? "NavItem" : "NarrowNavItem"}>
                 <h3>
                     {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a href="#" target="_self" rel="noopener noreferrer"
@@ -63,11 +66,13 @@ class UserInfo extends React.Component<UserInfoProps, any> {
 }
 
 export interface NavBarProps {
-    items: NavBarItemProp[],
+    items: NavBarItemProps[],
     title: string,
-    loggedIn: boolean,
-    width: number
+    loggedIn: boolean
 
+}
+
+interface ResponsiveNarBarProps extends ResponsiveComponentProps, NavBarProps {
 }
 
 interface NavBarState {
@@ -75,8 +80,8 @@ interface NavBarState {
     showNavBarContent: boolean
 }
 
-export class NavBar extends React.Component<NavBarProps, NavBarState> {
-    constructor(props: NavBarProps) {
+export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> {
+    constructor(props: ResponsiveNarBarProps) {
         super(props);
         this.state = {showingLoginPage: true, showNavBarContent: false};
     }
@@ -91,16 +96,18 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
     }
 
     render() {
-        let toggleButton = isLargeScreen(this.props.width) ? null :
+        let toggleButton = this.props.isLargeScreen ? null :
             <button className="ToggleButton" onClick={this.onToggleButtonClick}/>;
 
         let NavBarContent;
-        if (isLargeScreen(this.props.width)) {
+        if (this.props.isLargeScreen) {
             NavBarContent = (
                 <div className="NavBarContentContainer">
                     <ul className="NavBarSiteItemContainer">
                         {this.props.items.map((value, index) =>
-                            <NavBarItem name={value.name} link={value.link} key={index}/>)}
+                            <NavBarItem name={value.name} link={value.link} key={index}
+                                        screenWidth={this.props.screenWidth}
+                                        isLargeScreen={this.props.isLargeScreen}/>)}
                     </ul>
                     <UserInfo loggedIn={this.props.loggedIn}
                               showingLogin={this.state.showingLoginPage}
@@ -109,9 +116,11 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
             );
         } else if (this.state.showNavBarContent) {
             NavBarContent = (
-                <ul>
+                <ul className="NarrowNavBarContainer">
                     {this.props.items.map((value, index) =>
-                        <NavBarItem name={value.name} link={value.link} key={index}/>)}
+                        <NavBarItem name={value.name} link={value.link} key={index}
+                                    screenWidth={this.props.screenWidth}
+                                    isLargeScreen={this.props.isLargeScreen}/>)}
                     <li>
                         <UserInfo loggedIn={this.props.loggedIn}
                                   showingLogin={this.state.showingLoginPage}
@@ -124,15 +133,12 @@ export class NavBar extends React.Component<NavBarProps, NavBarState> {
         return (
             <div className="NavBarContainer">
                 <div className="NavBarMain">
-                    <h1 className="Title">{this.props.title}</h1>
-                    {isLargeScreen(this.props.width) ? NavBarContent : toggleButton}
+                    <span className="Title">{this.props.title}</span>
+                    {this.props.isLargeScreen ? NavBarContent : toggleButton}
                 </div>
-                {isLargeScreen(this.props.width) ? null : NavBarContent}
+                {this.props.isLargeScreen ? null : NavBarContent}
             </div>
         );
-    }
-
-    componentDidMount() {
     }
 
 }

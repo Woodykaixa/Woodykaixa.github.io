@@ -1,24 +1,40 @@
 .Footer {
-    height: 3rem;
-    padding: 0 4rem;
+    min-height: 40px;
+    padding: 0 0.2rem;
     background-color: #282c34;
     display: flex;
 }
 
 .Footer ul {
     list-style: none;
-    margin: 10px;
     align-items: center;
     display: flex;
+    padding-inline-start: 0.2rem;
+    flex-direction: column;
+    width: 100%;
 }
 
 .Footer li {
     color: white;
     opacity: 0.6;
-    margin: 0 0.4rem 0 0;
+    margin: 0 0.4rem;
+    text-align: left;
+    width: 100%;
 }
 
 @media (min-width: 768px) {
+    .Footer {
+        padding: 0 60px;
+    }
+
+    .Footer ul {
+        flex-direction: row;
+    }
+
+    .Footer li {
+        width: fit-content;
+    }
+
     .Footer li:not(:nth-last-child(-n+1)):after {
         content: '|';
         color: white;

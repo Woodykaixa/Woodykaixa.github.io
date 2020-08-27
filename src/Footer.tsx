@@ -1,8 +1,13 @@
 import React from "react";
 import "./Footer.css";
+import {ResponsiveComponentProps} from "./common/common";
 
-interface FooterProps {
-    sites: string[]
+export interface FooterItemProps {
+    name: string
+}
+
+interface FooterProps extends ResponsiveComponentProps {
+    sites: FooterItemProps[]
 }
 
 export class Footer extends React.Component<FooterProps, any> {
@@ -10,7 +15,9 @@ export class Footer extends React.Component<FooterProps, any> {
         return (
             <div className="Footer">
                 <ul>
-                    {this.props.sites.map((site, index) => <li key={index}>{site}</li>)}
+                    {this.props.sites.map(
+                        (site, index) => <li key={index}>{site.name}</li>
+                    )}
                 </ul>
             </div>
         );

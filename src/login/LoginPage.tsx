@@ -2,10 +2,10 @@ import React from 'react';
 import './LoginPage.css';
 import logo from '../logo.svg';
 import {Redirect} from 'react-router-dom';
-import {isLargeScreen} from "../common/common";
+import {ResponsiveComponentProps} from "../common/common";
 
 
-interface InputComponentProps {
+interface InputComponentProps extends ResponsiveComponentProps {
     placeholder: string,
     name: string,
     type?: string
@@ -32,9 +32,14 @@ class InputComponent extends React.Component<InputComponentProps, InputComponent
     render() {
         return (
             <div className="InputBorder">
-                <label className="InputHint">{this.props.placeholder}</label>
+                {
+                    this.props.isLargeScreen ?
+                        <label className="InputHint">{this.props.placeholder}</label> :
+                        null
+                }
                 <input type={this.props.type ? this.props.type : "text"} name={this.props.name}
                        value={this.state.value}
+                       placeholder={this.props.isLargeScreen ? "" : this.props.placeholder}
                        autoComplete={this.props.type === "password" ? "current-password" : "on"}
                        onChange={this.OnChange}/>
             </div>
@@ -42,10 +47,9 @@ class InputComponent extends React.Component<InputComponentProps, InputComponent
     }
 }
 
-interface LoginProps {
+interface LoginProps extends ResponsiveComponentProps {
     loggedIn: boolean,
-    loginFunction: () => void,
-    width: number
+    loginFunction: () => void
 }
 
 export class LoginPage extends React.Component<LoginProps, any> {
@@ -61,7 +65,7 @@ export class LoginPage extends React.Component<LoginProps, any> {
         return (
             <div className="LoginFormContainer">
                 {
-                    isLargeScreen(this.props.width) ?
+                    this.props.isLargeScreen ?
                         <aside className="ImgArea">
                             <img src={logo} alt="tmp logo"/>
                         </aside>
@@ -69,8 +73,12 @@ export class LoginPage extends React.Component<LoginProps, any> {
                 }
                 <form className="LoginForm" onSubmit={this.onSubmit}>
                     <h3>登录</h3>
-                    <InputComponent name="name" placeholder="用户名"/>
-                    <InputComponent type="password" name="pwd" placeholder="密 码"/>
+                    <InputComponent name="name" placeholder="用户名"
+                                    screenWidth={this.props.screenWidth}
+                                    isLargeScreen={this.props.isLargeScreen}/>
+                    <InputComponent type="password" name="pwd" placeholder="密 码"
+                                    screenWidth={this.props.screenWidth}
+                                    isLargeScreen={this.props.isLargeScreen}/>
                     <button className="LoginButton">登录</button>
                 </form>
             </div>

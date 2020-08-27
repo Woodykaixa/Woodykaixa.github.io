@@ -3,6 +3,13 @@
  * @param width 屏幕宽度
  */
 export function isLargeScreen(width: number) {
-    console.log('width: ' + width)
     return width > 768;
+}
+
+/**
+ * 响应式布局组件需要的属性
+ */
+export interface ResponsiveComponentProps {
+    screenWidth: number,
+    isLargeScreen: boolean
 }
