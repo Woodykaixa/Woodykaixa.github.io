@@ -11,7 +11,5 @@ export function isLargeScreen(width: number) {
  */
 export interface ResponsiveComponentProps {
     screenWidth: number,
-    screenHeight: number,
-    isLargeScreen: boolean,
-    onDocumentRerender: () => void
+    isLargeScreen: boolean
 }

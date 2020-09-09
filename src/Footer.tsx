@@ -7,7 +7,8 @@ export interface FooterItemProps {
 }
 
 interface FooterProps extends ResponsiveComponentProps {
-    sites: FooterItemProps[]
+    sites: FooterItemProps[],
+    screenHeight: number
 }
 
 export class Footer extends React.Component<FooterProps, any> {

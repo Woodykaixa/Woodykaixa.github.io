@@ -73,8 +73,6 @@ export class App extends React.Component<any, AppState> {
                 <BrowserRouter>
                     <NavBar items={this.state.navSites} loggedIn={this.state.isLoggedInUser}
                             title="Kaixa Site" screenWidth={this.state.width}
-                            screenHeight={this.state.height}
-                            onDocumentRerender={this.setResponsiveStates}
                             isLargeScreen={this.state.isLargeScreen}/>
                     <div className="MainContent">
                         <Switch>
@@ -82,8 +80,6 @@ export class App extends React.Component<any, AppState> {
                                 <LoginPage loggedIn={this.state.isLoggedInUser}
                                            loginFunction={this.userLogin}
                                            screenWidth={this.state.width}
-                                           screenHeight={this.state.height}
-                                           onDocumentRerender={this.setResponsiveStates}
                                            isLargeScreen={this.state.isLargeScreen}/>
                             </Route>
                             <Route path="/logout">
@@ -104,7 +100,6 @@ export class App extends React.Component<any, AppState> {
                     </div>
                     <Footer sites={this.state.footerSites} screenWidth={this.state.width}
                             screenHeight={this.state.height}
-                            onDocumentRerender={this.setResponsiveStates}
                             isLargeScreen={this.state.isLargeScreen}/>
 
                 </BrowserRouter>

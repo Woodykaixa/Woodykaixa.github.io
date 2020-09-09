@@ -86,13 +86,9 @@ export class LoginPage extends React.Component<LoginProps, LoginState> {
                     <h3>登录</h3>
                     <InputComponent name="name" placeholder="用户名"
                                     screenWidth={this.props.screenWidth}
-                                    screenHeight={this.props.screenHeight}
-                                    onDocumentRerender={this.props.onDocumentRerender}
                                     isLargeScreen={this.props.isLargeScreen}/>
                     <InputComponent type="password" name="pwd" placeholder="密 码"
                                     screenWidth={this.props.screenWidth}
-                                    screenHeight={this.props.screenHeight}
-                                    onDocumentRerender={this.props.onDocumentRerender}
                                     isLargeScreen={this.props.isLargeScreen}/>
                     <button className="LoginButton">登录</button>
                 </form>

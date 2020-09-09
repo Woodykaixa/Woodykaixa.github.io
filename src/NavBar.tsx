@@ -99,8 +99,6 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
                         {this.props.items.map((value, index) =>
                             <NavBarItem name={value.name} link={value.link} key={index}
                                         screenWidth={this.props.screenWidth}
-                                        screenHeight={this.props.screenHeight}
-                                        onDocumentRerender={this.props.onDocumentRerender}
                                         isLargeScreen={this.props.isLargeScreen}/>)}
                     </ul>
                     <UserInfo loggedIn={this.props.loggedIn}
@@ -114,8 +112,6 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
                     {this.props.items.map((value, index) =>
                         <NavBarItem name={value.name} link={value.link} key={index}
                                     screenWidth={this.props.screenWidth}
-                                    screenHeight={this.props.screenHeight}
-                                    onDocumentRerender={this.props.onDocumentRerender}
                                     isLargeScreen={this.props.isLargeScreen}/>)}
                     <li>
                         <UserInfo loggedIn={this.props.loggedIn}
