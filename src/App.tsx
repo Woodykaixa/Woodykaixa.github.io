@@ -44,9 +44,7 @@ export class App extends React.Component<any, AppState> {
             ],
             isLoggedInUser: false,
             footerSites: [
-                {name: 'Copyright ©2020 Woodykaixa. All rights reserved.'},
-                {name: '项目仓库'},
-                {name: '京ICP备20006005号'}
+                {name: 'Copyright ©2020 Woodykaixa. All rights reserved.'}
             ],
             width: docWidth,
             height: document.body.clientHeight,
@@ -90,8 +88,7 @@ export class App extends React.Component<any, AppState> {
                                 <RegisterPage/>
                             </Route>
                             <Route path="/docs">
-                                <DocPage loggedIn={this.state.isLoggedInUser}
-                                         onRerender={this.setResponsiveStates}/>
+                                <DocPage loggedIn={this.state.isLoggedInUser}/>
                             </Route>
                             <Route path="/">
                                 <IndexPage/>

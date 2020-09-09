@@ -1,77 +1,81 @@
 import React from 'react';
-import {MarkdownReader} from "./MarkdownReader";
-import {Redirect} from 'react-router-dom';
+import {DocumentReader} from "./DocumentReader";
+import {Switch, Redirect, Route, Link, BrowserRouter} from 'react-router-dom';
 import "./DocPage.css";
 
 interface DocLinkProps {
     displayName: string,
-    linkName: string,
-    open: (file: string) => void
+    linkName: string
 }
 
 class DocLink extends React.Component<DocLinkProps, any> {
 
-    toLink = () => {
-        this.props.open(this.props.linkName);
-    }
-
     render() {
-        return <li className="DocLink" onClick={this.toLink}>{this.props.displayName}</li>;
+        return <li className="DocLink"><Link
+            to={'/' + this.props.linkName}>{this.props.displayName}</Link></li>;
     }
 }
 
 interface DocProps {
-    loggedIn: boolean,
-    onRerender: () => void
+    loggedIn: boolean
+}
+
+interface docFile {
+    filename: string,
+    displayName: string
 }
 
 interface DocState {
-    docs: string[],
-    opened: string | null
+    docs: docFile[],
 }
 
 export class DocPage extends React.Component<DocProps, DocState> {
 
-    docs: string[] = [
-        'markdown测试文件',
-        'robots.txt'
+    docs: docFile[] = [
+        {
+            displayName: 'markdown测试文件',
+            filename: 'test.md'
+        },
+        {
+            displayName: 'robots协议文件',
+            filename: 'robots.txt'
+        }
     ]
 
     constructor(props: DocProps) {
         super(props);
-        this.state = {docs: this.docs, opened: null};
-    }
-
-    openFile = (file: string) => {
-        this.setState({opened: file});
-    }
-
-    closeFile = () => {
-        this.setState({opened: null});
+        this.state = {docs: this.docs};
     }
 
     render() {
         if (this.props.loggedIn) {
-            if (this.state.opened === null) {
-                return (
-                    <div>
-                        <div>
-                            <ul>
-                                {this.state.docs.map(
-                                    (file, index) =>
-                                        <DocLink displayName={file} linkName={file} key={index}
-                                                 open={this.openFile}/>
-                                )}
-                            </ul>
-                        </div>
-                    </div>
-                );
-            } else {
-                return (
-                    <MarkdownReader/>
-                );
-            }
+            return (
+                <BrowserRouter basename='/docs'>
+                    <Switch>
+                        {this.state.docs.map((doc, index) =>
+                            <Route key={index} path={'/' + doc.filename}>
+                                <DocumentReader file={doc.filename}/>
+                            </Route>)}
+                        <Route path='/'>
+                            <div>
+                                <div>
+                                    <ul>
+                                        {this.state.docs.map(
+                                            (doc, index) =>
+                                                <DocLink displayName={doc.displayName}
+                                                         linkName={doc.filename}
+                                                         key={index}/>
+                                        )}
+                                    </ul>
+                                </div>
+                            </div>
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+
+            );
         }
+
         return <Redirect to='/login?from_link=/docs'/>;
     }
 }

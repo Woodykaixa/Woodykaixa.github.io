@@ -94,12 +94,8 @@
 
 }
 
-.ToggleButton:hover {
-    background-color: #61dafb;
-}
-
 .ToggleButton:active {
-    background-color: #cdcdcd;
+    background-color: #42c4e5;
 }
 
 .NarrowNavBarContainer {

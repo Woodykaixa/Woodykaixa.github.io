@@ -57,3 +57,9 @@
     border: 1px solid #2c3039;
     border-radius: 5px;
 }
+
+@media (max-width: 768px) {
+    .LoginForm {
+        width: 100%;
+    }
+}

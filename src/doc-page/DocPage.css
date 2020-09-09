@@ -1,4 +1,3 @@
-.DocLink:hover {
-    cursor: pointer;
+.DocLink a:hover {
     color: #61dafb;
 }
