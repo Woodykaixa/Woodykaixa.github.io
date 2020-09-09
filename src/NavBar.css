@@ -78,8 +78,9 @@
 .ToggleButton {
     outline-style: none;
     background-color: transparent;
-    border-color: #61dafb;
+    border-color: #a7a7a7;
     border-radius: 5px;
+    border-width: 1px;
     border-style: solid;
     margin: auto 1rem auto auto;
     width: 30px;

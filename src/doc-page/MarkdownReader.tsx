@@ -24,7 +24,7 @@ export class MarkdownReader extends React.Component<any, MarkdownReaderState> {
             breaks: false, // 允许回车换行（该选项要求 gfm 为true）
             smartLists: true, // 使用比原生markdown更时髦的列表
             smartypants: false, // 使用更为时髦的标点
-        })
+        });
         this.state = {url: process.env.PUBLIC_URL + '/test.md', md: ''};
     }
 
@@ -35,7 +35,7 @@ export class MarkdownReader extends React.Component<any, MarkdownReaderState> {
     loadMarkdown = () => {
         fetch(this.state.url).then(res => res.text()).then(res => {
             this.setState({md: marked(res)});
-        })
+        });
     }
 
 
@@ -46,6 +46,6 @@ export class MarkdownReader extends React.Component<any, MarkdownReaderState> {
                      dangerouslySetInnerHTML={{__html: sanitize(this.state.md)}}>
                 </div>
             </div>
-        )
+        );
     }
 }

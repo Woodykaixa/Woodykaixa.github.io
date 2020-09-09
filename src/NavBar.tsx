@@ -12,19 +12,11 @@ interface ResponsiveNavBarItemProp extends ResponsiveComponentProps, NavBarItemP
 }
 
 class NavBarItem extends React.Component<ResponsiveNavBarItemProp, any> {
-    handleClick = () => {
-        alert("点个锤子，还没做完呢");
-    }
-
     render() {
         return (
             <li className={this.props.isLargeScreen ? "NavItem" : "NarrowNavItem"}>
                 <h3>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <a href="#" target="_self" rel="noopener noreferrer"
-                       onClick={this.handleClick}>
-                        {this.props.name}
-                    </a>
+                    <Link to={this.props.link}>{this.props.name}</Link>
                 </h3>
             </li>
         );
@@ -107,6 +99,8 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
                         {this.props.items.map((value, index) =>
                             <NavBarItem name={value.name} link={value.link} key={index}
                                         screenWidth={this.props.screenWidth}
+                                        screenHeight={this.props.screenHeight}
+                                        onDocumentRerender={this.props.onDocumentRerender}
                                         isLargeScreen={this.props.isLargeScreen}/>)}
                     </ul>
                     <UserInfo loggedIn={this.props.loggedIn}
@@ -120,6 +114,8 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
                     {this.props.items.map((value, index) =>
                         <NavBarItem name={value.name} link={value.link} key={index}
                                     screenWidth={this.props.screenWidth}
+                                    screenHeight={this.props.screenHeight}
+                                    onDocumentRerender={this.props.onDocumentRerender}
                                     isLargeScreen={this.props.isLargeScreen}/>)}
                     <li>
                         <UserInfo loggedIn={this.props.loggedIn}

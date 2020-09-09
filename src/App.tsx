@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import {NavBar} from "./NavBar";
-import {DocPage} from "./index/DocPage";
+import {IndexPage} from "./index/IndexPage";
+import {DocPage} from "./doc-page/DocPage";
 import {LoginPage} from "./login/LoginPage";
 import {LogoutPage} from "./logout/LogoutPage";
 import {RegisterPage} from "./register/RegisterPage";
@@ -24,14 +25,22 @@ interface AppState {
 }
 
 export class App extends React.Component<any, AppState> {
+    setResponsiveStates = () => {
+        const docWidth = document.body.clientWidth;
+        this.setState({
+            width: docWidth,
+            height: document.body.clientHeight,
+            isLargeScreen: isLargeScreen(docWidth)
+        });
+    }
+
     constructor(props: any) {
         super(props);
         const docWidth = document.body.clientWidth;
         this.state = {
             navSites: [
-                {name: 'baidu', link: 'https://www.baidu.com'},
-                {name: 'github', link: 'https://github.com'},
-                {name: 'bjutlab', link: 'https://www.bjutlab.cn'},
+                {name: '关于', link: '/'},
+                {name: '文档', link: '/docs'},
             ],
             isLoggedInUser: false,
             footerSites: [
@@ -43,14 +52,11 @@ export class App extends React.Component<any, AppState> {
             height: document.body.clientHeight,
             isLargeScreen: isLargeScreen(docWidth)
         };
-        window.onresize = () => {
-            const docWidth = document.body.clientWidth;
-            this.setState({
-                width: docWidth,
-                height: document.body.clientHeight,
-                isLargeScreen: isLargeScreen(docWidth)
-            });
-        };
+        window.onresize = this.setResponsiveStates;
+    }
+
+    onDocumentRerender = () => {
+        this.setResponsiveStates();
     }
 
     userLogin = () => {
@@ -67,6 +73,8 @@ export class App extends React.Component<any, AppState> {
                 <BrowserRouter>
                     <NavBar items={this.state.navSites} loggedIn={this.state.isLoggedInUser}
                             title="Kaixa Site" screenWidth={this.state.width}
+                            screenHeight={this.state.height}
+                            onDocumentRerender={this.setResponsiveStates}
                             isLargeScreen={this.state.isLargeScreen}/>
                     <div className="MainContent">
                         <Switch>
@@ -74,6 +82,8 @@ export class App extends React.Component<any, AppState> {
                                 <LoginPage loggedIn={this.state.isLoggedInUser}
                                            loginFunction={this.userLogin}
                                            screenWidth={this.state.width}
+                                           screenHeight={this.state.height}
+                                           onDocumentRerender={this.setResponsiveStates}
                                            isLargeScreen={this.state.isLargeScreen}/>
                             </Route>
                             <Route path="/logout">
@@ -83,12 +93,18 @@ export class App extends React.Component<any, AppState> {
                             <Route path="/register">
                                 <RegisterPage/>
                             </Route>
+                            <Route path="/docs">
+                                <DocPage loggedIn={this.state.isLoggedInUser}
+                                         onRerender={this.setResponsiveStates}/>
+                            </Route>
                             <Route path="/">
-                                <DocPage loggedIn={this.state.isLoggedInUser}/>
+                                <IndexPage/>
                             </Route>
                         </Switch>
                     </div>
                     <Footer sites={this.state.footerSites} screenWidth={this.state.width}
+                            screenHeight={this.state.height}
+                            onDocumentRerender={this.setResponsiveStates}
                             isLargeScreen={this.state.isLargeScreen}/>
 
                 </BrowserRouter>

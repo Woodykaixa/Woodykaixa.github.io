@@ -12,8 +12,12 @@ interface FooterProps extends ResponsiveComponentProps {
 
 export class Footer extends React.Component<FooterProps, any> {
     render() {
+        let className = "Footer";
+        if (this.props.screenHeight < window.innerHeight) {
+            className += " FixBottom";
+        }
         return (
-            <div className="Footer">
+            <div className={className}>
                 <ul>
                     {this.props.sites.map(
                         (site, index) => <li key={index}>{site.name}</li>

@@ -5,6 +5,13 @@
     display: flex;
 }
 
+.FixBottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
 .Footer ul {
     list-style: none;
     align-items: center;

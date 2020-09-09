@@ -11,10 +11,3 @@
     border-radius: 5px;
     overflow: auto;
 }
-
-
-@media (max-width: 768px) {
-    .MarkdownContainer {
-        width: 100%;
-    }
-}

@@ -1,0 +1,89 @@
+.IndexPageContainer {
+    width: 70%;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.IndexPageInfoContainer {
+    display: flex;
+}
+
+.IndexPageAvatarBox {
+    margin: 2rem 0;
+    padding: 0;
+}
+
+.IndexPageAvatarBox img {
+    width: 15rem;
+    padding: 0;
+}
+
+.IndexPageInfoBox {
+    margin: 2rem 5rem;
+    text-align: left;
+}
+
+.IndexPageNameBox {
+    font-size: 2.8rem;
+    margin: 0;
+}
+
+.IndexPageLinkBox {
+    font-weight: bold;
+}
+
+.IndexPageCompanyBox {
+    font-weight: bold;
+}
+
+.IndexPageRepoList {
+    text-align: left;
+    padding-inline-start: 3rem;
+}
+
+.IndexPageRepoList h3 {
+    font-size: 1.8rem;
+}
+
+.IndexPageRepoList li {
+    padding-inline-start: 4rem;
+}
+
+.IndexPageRepoList a {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.IndexPageRepoList a:active {
+    color: #61dafb;
+}
+
+@media (max-width: 768px) {
+    .IndexPageInfoContainer {
+        display: block;
+    }
+
+    .IndexPageInfoBox {
+        margin: 0;
+    }
+
+    .IndexPageNameBox {
+        font-size: 2rem;
+    }
+
+    .IndexPageRepoList {
+        padding-inline-start: 0.3rem;
+    }
+
+    .IndexPageRepoList h3 {
+        font-size: 1rem;
+    }
+
+    .IndexPageRepoList li {
+        padding-inline-start: 0.5rem;
+    }
+
+    .IndexPageRepoList a {
+        font-size: 0.6rem;
+    }
+}

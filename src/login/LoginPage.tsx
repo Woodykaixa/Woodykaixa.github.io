@@ -52,7 +52,18 @@ interface LoginProps extends ResponsiveComponentProps {
     loginFunction: () => void
 }
 
-export class LoginPage extends React.Component<LoginProps, any> {
+interface LoginState {
+    redirectTo: string
+}
+
+export class LoginPage extends React.Component<LoginProps, LoginState> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {redirectTo: window.location.href.substr(window.location.href.lastIndexOf('=') + 1)};
+        console.log(this.state.redirectTo);
+    }
+
 
     onSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -61,7 +72,7 @@ export class LoginPage extends React.Component<LoginProps, any> {
 
     render() {
         if (this.props.loggedIn)
-            return <Redirect to='/'/>;
+            return <Redirect to={this.state.redirectTo}/>;
         return (
             <div className="LoginFormContainer">
                 {
@@ -75,9 +86,13 @@ export class LoginPage extends React.Component<LoginProps, any> {
                     <h3>登录</h3>
                     <InputComponent name="name" placeholder="用户名"
                                     screenWidth={this.props.screenWidth}
+                                    screenHeight={this.props.screenHeight}
+                                    onDocumentRerender={this.props.onDocumentRerender}
                                     isLargeScreen={this.props.isLargeScreen}/>
                     <InputComponent type="password" name="pwd" placeholder="密 码"
                                     screenWidth={this.props.screenWidth}
+                                    screenHeight={this.props.screenHeight}
+                                    onDocumentRerender={this.props.onDocumentRerender}
                                     isLargeScreen={this.props.isLargeScreen}/>
                     <button className="LoginButton">登录</button>
                 </form>
