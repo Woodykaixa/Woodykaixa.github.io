@@ -4,6 +4,7 @@ import {highlightAuto} from 'highlight.js';
 import {sanitize} from 'dompurify';
 import 'highlight.js/styles/atom-one-light.css';
 import './DocumentReader.css';
+import {Link} from "react-router-dom";
 
 interface MarkdownReaderProps {
     file: string
@@ -58,6 +59,7 @@ export class DocumentReader extends React.Component<MarkdownReaderProps, Markdow
             </div>;
         return (
             <div className="MarkdownContainer">
+                <Link to="../">back</Link>
                 {content}
             </div>
         );

@@ -6,6 +6,7 @@ import {DocPage} from "./doc-page/DocPage";
 import {LoginPage} from "./login/LoginPage";
 import {LogoutPage} from "./logout/LogoutPage";
 import {RegisterPage} from "./register/RegisterPage";
+import {ToolPage} from "./tool-page/ToolPage";
 import {Footer, FooterItemProps} from "./Footer";
 import {Route, BrowserRouter, Switch} from "react-router-dom";
 import {isLargeScreen} from "./common/common";
@@ -41,6 +42,7 @@ export class App extends React.Component<any, AppState> {
             navSites: [
                 {name: '关于', link: '/'},
                 {name: '文档', link: '/docs'},
+                {name: '工具', link: '/tools'},
             ],
             isLoggedInUser: false,
             footerSites: [
@@ -89,6 +91,10 @@ export class App extends React.Component<any, AppState> {
                             </Route>
                             <Route path="/docs">
                                 <DocPage loggedIn={this.state.isLoggedInUser}/>
+                            </Route>
+                            <Route path="/tools">
+                                <ToolPage screenWidth={this.state.width}
+                                          isLargeScreen={this.state.isLargeScreen}/>
                             </Route>
                             <Route path="/">
                                 <IndexPage/>

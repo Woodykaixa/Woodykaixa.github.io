@@ -1,8 +1,9 @@
 .MarkdownContainer {
     text-align: left;
-    padding: 0 15px;
+    padding: 2rem 1.5rem;
     width: 70%;
     margin: 0 auto;
+    background-color: white;
 }
 
 .MarkdownContainer pre {

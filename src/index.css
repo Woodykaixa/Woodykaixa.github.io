@@ -5,6 +5,7 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background-color: #d4f1fa;
 }
 
 a {
@@ -14,4 +15,62 @@ a {
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+form {
+    width: 50%;
+    max-width: 30rem;
+    background-color: #ececec;
+    border-radius: 5px;
+    border-color: gray;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form button {
+    margin: 30px auto;
+    width: 40%;
+    height: 40px;
+    background-color: #4c5363;
+    color: white;
+    border: 1px solid #2c3039;
+    border-radius: 5px;
+}
+
+.ResponsiveInputBorder {
+    margin: 10px;
+    padding: 10px;
+    height: 40px;
+    border-width: 1px;
+    border-color: #cdcdcd;
+    border-radius: 5px;
+    border-style: solid;
+    background-color: white;
+    display: flex;
+    align-items: center;
+}
+
+.ResponsiveInputBorder input {
+    width: 100%;
+    margin: 10px 0;
+    padding: 0;
+    background-color: transparent;
+    outline-style: none;
+    border: none;
+    font-size: large;
+}
+
+.ResponsiveInputHint {
+    margin: 10px 10px 10px 0;
+    width: 6rem;
+}
+
+
+@media (max-width: 768px) {
+    form {
+        width: 100%;
+    }
 }

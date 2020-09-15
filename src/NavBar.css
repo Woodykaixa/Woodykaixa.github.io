@@ -27,8 +27,6 @@
 .NavBarSiteItemContainer {
     display: flex;
     list-style: none;
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
 
 .NavBarSiteItemContainer li {
