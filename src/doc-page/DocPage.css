@@ -1,3 +1,27 @@
 .DocLink a:hover {
     color: #61dafb;
 }
+
+.DocumentCatalogueContainer {
+    position: fixed;
+    left: 1rem;
+    top: 4rem;
+    background-color: white;
+    min-height: 40vh;
+    width: 15%;
+    overflow: auto;
+}
+
+.DocumentCatalogueHeader {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.DocumentCatalogueContainer ul {
+    padding-inline-start: 0.9rem;
+    text-align: left;
+}
+
+.DocumentCatalogueTopFolder {
+    padding-inline-start: 1.1rem;
+}

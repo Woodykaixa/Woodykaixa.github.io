@@ -1,3 +1,7 @@
+.DocumentReaderContainer {
+    display: flex;
+}
+
 .MarkdownContainer {
     text-align: left;
     padding: 2rem 1.5rem;
@@ -11,4 +15,8 @@
     padding: 10px;
     border-radius: 5px;
     overflow: auto;
+}
+
+.FileItem, .FolderItem {
+    margin-left: 5px;
 }

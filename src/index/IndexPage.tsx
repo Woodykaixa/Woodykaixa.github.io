@@ -55,7 +55,8 @@ export class IndexPage extends React.Component<any, IndexPageState> {
                 </div>
                 <ul className="IndexPageRepoList">
                     <h3>代码仓库</h3>
-                    {this.state.repos.map(repo => <li><a href={repo.link}>{repo.title}</a></li>)}
+                    {this.state.repos.map((repo, index) =>
+                        <li key={index}><a href={repo.link}>{repo.title}</a></li>)}
                 </ul>
             </div>
         );
