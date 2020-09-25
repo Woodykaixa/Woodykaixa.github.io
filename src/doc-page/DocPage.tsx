@@ -2,6 +2,7 @@ import React from 'react';
 import {ProjectReader, ProjectFolder} from "./DocumentReader";
 import {Switch, Redirect, Route, Link, BrowserRouter} from 'react-router-dom';
 import "./DocPage.css";
+import {urlFor} from "../common/env";
 
 interface DocLinkProps {
     displayName: string,
@@ -61,7 +62,7 @@ export class DocPage extends React.Component<DocProps, DocState> {
     }
 
     componentDidMount() {
-        fetch('http://127.0.0.1:5000/projectDoc', {
+        fetch(urlFor('projectDoc'), {
             mode: 'cors',
             credentials: 'include'
         }).then(res => res.json()).then(json => {

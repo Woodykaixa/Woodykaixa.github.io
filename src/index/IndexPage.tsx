@@ -1,5 +1,6 @@
 import React from 'react';
 import "./IndexPage.css";
+import {urlFor} from "../common/env";
 
 interface RepoLink {
     title: string,
@@ -8,6 +9,8 @@ interface RepoLink {
 }
 
 interface IndexPageState {
+    fetching: boolean,
+    fetchSuccess: boolean,
     avatar: string,
     name: string,
     company: string,
@@ -18,27 +21,48 @@ interface IndexPageState {
 export class IndexPage extends React.Component<any, IndexPageState> {
     constructor(props: any) {
         super(props);
-        this.state = {name: '', avatar: '', company: '', github: '', repos: []};
+        this.state = {
+            name: '',
+            avatar: '',
+            company: '',
+            github: '',
+            repos: [],
+            fetching: true,
+            fetchSuccess: false
+        };
     }
 
     componentDidMount() {
-        fetch('https://api.github.com/users/Woodykaixa').then(res => res.json()).then(json => {
-            this.setState({
-                avatar: json.avatar_url,
-                name: json.name,
-                company: json.company,
-                github: json.html_url
-            });
-            fetch(json.repos_url).then(res => res.json()).then((repoObjects: any[]) => {
-                const repos = repoObjects.map(r => {
-                    return {title: r.name, link: r.html_url, description: r.description};
+        fetch(urlFor('my_profile')).then(res => res.json()).then(json => {
+            if (json.success) {
+                this.setState({
+                    fetchSuccess: true,
+                    fetching: false,
+                    avatar: json.avatar_url,
+                    name: json.name,
+                    company: json.company,
+                    github: json.html_url,
+                    repos: json.repos
                 });
-                this.setState({repos: repos});
-            });
+            } else {
+                this.setState({
+                    fetching: false,
+                    fetchSuccess: false
+                });
+            }
         });
     }
 
     render() {
+        if (this.state.fetching) {
+            return <div>
+                Loading. Please wait
+            </div>;
+        } else if (!this.state.fetchSuccess) {
+            return <div>
+                Fetch failed.
+            </div>;
+        }
         return (
             <div className="IndexPageContainer">
                 <div className="IndexPageInfoContainer">

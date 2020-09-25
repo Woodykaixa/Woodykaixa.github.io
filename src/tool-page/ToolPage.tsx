@@ -2,6 +2,7 @@ import React from 'react';
 import "./ToolPage.css";
 import {ResponsiveInputComponent} from "../common/ResponsiveInputComponent";
 import {ResponsiveComponentProps} from "../common/common";
+import {urlFor} from "../common/env";
 
 interface LoginFormInfoProps extends ResponsiveComponentProps {
 
@@ -23,7 +24,7 @@ class LoginInfoForm extends React.Component<LoginFormInfoProps, LoginInfoFormSta
 
     query = (e: React.SyntheticEvent) => {
         e.preventDefault();
-        fetch('http://localhost:5000/BjutSchedule', {
+        fetch(urlFor('BjutSchedule'), {
             method: 'POST',
             body: JSON.stringify({
                 schoolId: this.state.sid,
