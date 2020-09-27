@@ -1,0 +1,179 @@
+.ProjectReaderContainer {
+    display: flex;
+    min-height: calc(100vh - 3rem - 40px);
+    margin: 0 calc(-4rem - 15px);
+}
+
+.FileContainer {
+    text-align: left;
+    padding: 0;
+    width: 100%;
+    background-color: white;
+}
+
+@media screen and (max-width: 768px) {
+    .ProjectReaderContainer {
+        margin: 0 -15px;
+        display: block;
+    }
+}
+
+.FileContainer pre {
+    background-color: #ececec;
+    padding: 10px;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.FileItem, .FolderItem {
+    padding: 5px
+}
+
+.FileItem:hover {
+    background-color: #dcdcdc;
+}
+
+.FileItem {
+    color: black;
+}
+
+.FileContent {
+
+}
+
+@media screen and (max-width: 768px) {
+    .FileItem, .FolderItem {
+        text-align: left;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .FolderItem ul {
+        padding-inline-start: 0;
+    }
+
+    .FileItem {
+        word-break: break-word;
+    }
+}
+
+.DocumentCatalogueContainer {
+    background-color: #f7feff;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 20%;
+    border: 0 solid #dcdcdc;
+    border-right-width: 1px;
+}
+
+.DocumentCatalogueHeader {
+    font-size: 1.3rem;
+    font-weight: bold;
+    padding: 5px;
+    height: 13vh;
+    word-break: break-word;
+    border: 0 solid #dcdcdc;
+    border-bottom-width: 1px;
+}
+
+.DocumentCatalogueBody {
+    padding: 0 0.9rem;
+}
+
+.CloseProjectLink {
+    padding: 0 5px;
+}
+
+.DocumentCatalogueContainer ul {
+    padding-inline-start: 0.9rem;
+    text-align: left;
+}
+
+.DocumentCatalogueTopFolder {
+    overflow: auto;
+    padding-inline-start: 1.1rem;
+    height: calc(87vh - 10px);
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.FileHeader {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 1rem;
+    height: 5rem;
+    box-shadow: 0 3px 8px 0 rgba(116, 129, 141, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    .FileHeader {
+        visibility: collapse;
+        height: 0;
+    }
+}
+
+.FileTab {
+    height: 100%;
+    box-sizing: border-box;
+    font-weight: bold;
+    font-size: large;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    border: 0 solid #61dafb;
+    border-bottom-width: 5px;
+}
+
+.FileBody {
+    padding: 1rem 1.5rem
+}
+
+@media screen and (max-width: 768px) {
+    .FileBody {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        min-height: calc(100vh - 7rem - 40px);
+        box-sizing: border-box;
+    }
+}
+
+.MobileCatalogueContainer {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    background-color: #f7feff;
+}
+
+.MobileCatalogueChangeButton {
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid #cdcdcd;
+    width: 100%;
+    text-align: left;
+    padding: 0.25rem;
+}
+
+.MobileMask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    z-index: 10;
+}
+
+.MobileFileList {
+    box-sizing: border-box;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    padding: 1rem 2rem;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    background-color: white;
+    width: 100%;
+    margin: 3rem 2rem;
+}

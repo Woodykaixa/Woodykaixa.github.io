@@ -7,16 +7,12 @@ export interface FooterItemProps {
 }
 
 interface FooterProps extends ResponsiveComponentProps {
-    sites: FooterItemProps[],
-    screenHeight: number
+    sites: FooterItemProps[]
 }
 
 export class Footer extends React.Component<FooterProps, any> {
     render() {
         let className = "Footer";
-        if (this.props.screenHeight < window.innerHeight) {
-            className += " FixBottom";
-        }
         return (
             <div className={className}>
                 <ul>

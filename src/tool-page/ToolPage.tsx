@@ -52,7 +52,7 @@ class LoginInfoForm extends React.Component<LoginFormInfoProps, LoginInfoFormSta
 
     render() {
         return (
-            <div>
+            <div style={{paddingTop: '1rem'}}>
                 <form onSubmit={this.query}>
                     <h3>课表查询</h3>
                     <ResponsiveInputComponent placeholder="学号" name="schoolId"
@@ -91,7 +91,7 @@ export class ToolPage extends React.Component<ToolPageProps, any> {
 
     render() {
         return (
-            <div>
+            <div className="FullPage">
                 <LoginInfoForm screenWidth={this.props.screenWidth}
                                isLargeScreen={this.props.isLargeScreen}/>
             </div>

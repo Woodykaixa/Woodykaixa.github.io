@@ -19,9 +19,7 @@ export class LoginPage extends React.Component<LoginProps, LoginState> {
     constructor(props: any) {
         super(props);
         this.state = {redirectTo: window.location.href.substr(window.location.href.lastIndexOf('=') + 1)};
-        console.log(this.state.redirectTo);
     }
-
 
     onSubmit = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -36,7 +34,7 @@ export class LoginPage extends React.Component<LoginProps, LoginState> {
         if (this.props.loggedIn)
             return <Redirect to={this.state.redirectTo}/>;
         return (
-            <div className="LoginFormContainer">
+            <div className="LoginFormContainer FullPage">
                 {
                     this.props.isLargeScreen ?
                         <aside className="ImgArea">
@@ -44,7 +42,7 @@ export class LoginPage extends React.Component<LoginProps, LoginState> {
                         </aside>
                         : null
                 }
-                <form onSubmit={this.onSubmit}>
+                <form className="LoginForm" onSubmit={this.onSubmit}>
                     <h3>登录</h3>
                     <ResponsiveInputComponent name="name" placeholder="用户名"
                                               screenWidth={this.props.screenWidth}

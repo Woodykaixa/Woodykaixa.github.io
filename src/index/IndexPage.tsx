@@ -64,7 +64,7 @@ export class IndexPage extends React.Component<any, IndexPageState> {
             </div>;
         }
         return (
-            <div className="IndexPageContainer">
+            <div className="IndexPageContainer FullPage">
                 <div className="IndexPageInfoContainer">
                     <div className="IndexPageAvatarBox">
                         <img src={this.state.avatar} alt={this.state.name}/>

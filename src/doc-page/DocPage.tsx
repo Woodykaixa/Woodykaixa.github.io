@@ -1,8 +1,9 @@
 import React from 'react';
-import {ProjectReader, ProjectFolder} from "./DocumentReader";
+import {ProjectReader, ProjectFolder} from "./ProjectReader";
 import {Switch, Redirect, Route, Link, BrowserRouter} from 'react-router-dom';
 import "./DocPage.css";
 import {urlFor} from "../common/env";
+import {ResponsiveComponentProps} from "../common/common";
 
 interface DocLinkProps {
     displayName: string,
@@ -31,7 +32,7 @@ class ProjectList extends React.Component<ProjectListProps, any> {
     render() {
         return (
             <div>
-                <ul>
+                <ul className="ProjectList">
                     {this.props.projects.map(
                         (doc, index) =>
                             <DocLink displayName={doc.name}
@@ -44,7 +45,7 @@ class ProjectList extends React.Component<ProjectListProps, any> {
     }
 }
 
-interface DocProps {
+interface DocProps extends ResponsiveComponentProps {
     loggedIn: boolean
 }
 
@@ -83,21 +84,25 @@ export class DocPage extends React.Component<DocProps, DocState> {
                 </div>;
             }
             return (
-                <BrowserRouter basename='/docs'>
-                    <Switch>
-                        {this.state.projects.map((project, index) =>
-                            <Route key={index} path={'/' + project.url}>
-                                <div className="DocPageContainer">
-                                    <ProjectReader project={project.name}
-                                                   files={this.state.projectFiles}
-                                                   updateProjectFiles={this.updateProjectFiles}/>
-                                </div>
-                            </Route>)}
-                        <Route path='/'>
-                            <ProjectList projects={this.state.projects}/>
-                        </Route>
-                    </Switch>
-                </BrowserRouter>
+                <div className="FullPage">
+                    <BrowserRouter basename='/docs'>
+                        <Switch>
+                            {this.state.projects.map((project, index) =>
+                                <Route key={index} path={'/' + project.url}>
+                                    <div className="DocPageContainer">
+                                        <ProjectReader project={project.name}
+                                                       files={this.state.projectFiles}
+                                                       updateProjectFiles={this.updateProjectFiles}
+                                                       screenWidth={this.props.screenWidth}
+                                                       isLargeScreen={this.props.isLargeScreen}/>
+                                    </div>
+                                </Route>)}
+                            <Route path='/'>
+                                <ProjectList projects={this.state.projects}/>
+                            </Route>
+                        </Switch>
+                    </BrowserRouter>
+                </div>
 
             );
         }

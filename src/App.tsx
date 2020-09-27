@@ -22,7 +22,7 @@ interface AppState {
     footerSites: FooterItemProps[], // 底部页脚显示的链接
     width: number, // document.body.clientWidth
     height: number, // document.body.clientHeight
-    isLargeScreen: boolean
+    isLargeScreen: boolean // width > 768px
 }
 
 export class App extends React.Component<any, AppState> {
@@ -53,10 +53,6 @@ export class App extends React.Component<any, AppState> {
             isLargeScreen: isLargeScreen(docWidth)
         };
         window.onresize = this.setResponsiveStates;
-    }
-
-    onDocumentRerender = () => {
-        this.setResponsiveStates();
     }
 
     userLogin = () => {
@@ -90,7 +86,9 @@ export class App extends React.Component<any, AppState> {
                                 <RegisterPage/>
                             </Route>
                             <Route path="/docs">
-                                <DocPage loggedIn={this.state.isLoggedInUser}/>
+                                <DocPage loggedIn={this.state.isLoggedInUser}
+                                         screenWidth={this.state.width}
+                                         isLargeScreen={this.state.isLargeScreen}/>
                             </Route>
                             <Route path="/tools">
                                 <ToolPage screenWidth={this.state.width}
@@ -102,7 +100,6 @@ export class App extends React.Component<any, AppState> {
                         </Switch>
                     </div>
                     <Footer sites={this.state.footerSites} screenWidth={this.state.width}
-                            screenHeight={this.state.height}
                             isLargeScreen={this.state.isLargeScreen}/>
 
                 </BrowserRouter>

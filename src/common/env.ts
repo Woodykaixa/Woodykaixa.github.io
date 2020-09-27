@@ -6,3 +6,8 @@ export const serverUrl =
 export const urlFor = (path: string) => {
     return serverUrl + path;
 };
+
+export const webUrl =
+    process.env.NODE_ENV === 'production' ?
+        'http://localhost:3000/' :
+        'https://woodykaixa.github.io/';
