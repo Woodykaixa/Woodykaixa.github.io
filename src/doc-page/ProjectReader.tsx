@@ -6,7 +6,7 @@ import 'highlight.js/styles/atom-one-light.css';
 import './ProjectReader.css';
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFolder, faAngleLeft} from '@fortawesome/free-solid-svg-icons';
+import {faFolder, faAngleLeft, faFolderOpen} from '@fortawesome/free-solid-svg-icons';
 import {faFileAlt} from '@fortawesome/free-regular-svg-icons';
 import {urlFor} from "../common/env";
 import {ResponsiveComponentProps} from "../common/common";
@@ -26,7 +26,93 @@ export interface ProjectFolder {
     contents: Array<string | ProjectFolder>
 }
 
-interface DocumentCatalogueProps extends ResponsiveComponentProps {
+interface DocumentFileItemProps {
+    filename: string,
+    project: string,
+    basePath: string,
+    onFileItemClick: (e: React.SyntheticEvent) => void
+}
+
+class DocumentFileItem extends React.Component<DocumentFileItemProps, any> {
+    render() {
+        return (
+            <a className="FileItem"
+               href={urlFor('project_file/') + this.props.project + this.props.basePath + '/' + this.props.filename}
+               onClick={this.props.onFileItemClick}
+               key={this.props.basePath + '/' + this.props.filename}>
+                <div>
+                    <FontAwesomeIcon icon={faFileAlt}
+                                     style={{marginRight: 10, color: '#adc1e4'}}/>
+                    {this.props.filename}
+                </div>
+            </a>
+        );
+    }
+}
+
+interface DocumentFolderItemProps {
+    project: string,
+    folderName: string,
+    basePath: string,
+    contents: Array<string | ProjectFolder>,
+    onFileItemClick: (e: React.SyntheticEvent) => void
+}
+
+interface DocumentFolderItemState {
+    expanded: boolean
+}
+
+class DocumentFolderItem extends React.Component<DocumentFolderItemProps, DocumentFolderItemState> {
+    constructor(props: DocumentFolderItemProps) {
+        super(props);
+        this.state = {expanded: false};
+    }
+
+    swapExpandingState = () => {
+        if (this.state.expanded) {
+            this.setState({expanded: false});
+        } else {
+            this.setState({expanded: true});
+        }
+    }
+
+    render() {
+        const requestBasePath = this.props.basePath + '/' + this.props.folderName;
+        return (
+            <li className="FolderItem">
+                <div onClick={this.swapExpandingState}>
+                    <div>
+                        <FontAwesomeIcon icon={this.state.expanded ? faFolderOpen : faFolder}
+                                         color='#f9d870' style={{marginRight: 10, width: 16}}/>
+                        <span>{this.props.folderName}</span>
+                    </div>
+                </div>
+                {this.state.expanded ?
+                    <div className="CatalogueIndent">
+                        <ul>
+                            {this.props.contents.map(f => {
+                                if (typeof f === 'string') {
+                                    return <DocumentFileItem project={this.props.project}
+                                                             onFileItemClick={this.props.onFileItemClick}
+                                                             filename={f}
+                                                             basePath={requestBasePath}/>;
+                                }
+                                return <DocumentFolderItem project={this.props.project}
+                                                           folderName={f.folderName}
+                                                           basePath={requestBasePath}
+                                                           contents={f.contents}
+                                                           onFileItemClick={this.props.onFileItemClick}/>;
+                            })}
+                        </ul>
+                    </div> :
+                    null}
+            </li>
+        );
+    }
+}
+
+interface DocumentCatalogueProps
+    extends ResponsiveComponentProps {
     project: string,
     projectFiles: Array<string | ProjectFolder>,
     currentFile: string,
@@ -70,29 +156,6 @@ class DocumentCatalogue extends React.Component<DocumentCatalogueProps, Document
         });
     }
 
-    renderFileOrFolder = (base: string, file: string | ProjectFolder) => {
-        if (typeof file === 'string') {
-            return <a href={urlFor('project_file/') + this.props.project + base + '/' + file}
-                      onClick={this.onFileItemClick} key={base + '/' + file}>
-                <li className='FileItem'>
-                    <FontAwesomeIcon icon={faFileAlt} style={{marginRight: 10, color: '#adc1e4'}}/>
-                    {file}
-                </li>
-            </a>;
-        }
-        return <li className='FolderItem' key={file.folderName}>
-            <div>
-                <FontAwesomeIcon icon={faFolder} color='#f9d870' style={{marginRight: 10}}/>
-                <span>{file.folderName}</span>
-            </div>
-            <ul>
-                {file.contents.map((f) => {
-                    return this.renderFileOrFolder(base + '/' + file.folderName, f);
-                })}
-            </ul>
-        </li>;
-    }
-
     showMobileMask = () => {
         this.setState({showMask: true});
     }
@@ -134,7 +197,16 @@ class DocumentCatalogue extends React.Component<DocumentCatalogueProps, Document
                     <div className="DocumentCatalogueBody">
                         <ul className="DocumentCatalogueTopFolder">
                             {this.props.projectFiles.map(f => {
-                                return this.renderFileOrFolder('', f);
+                                if (typeof f === 'string') {
+                                    return <DocumentFileItem filename={f}
+                                                             project={this.props.project}
+                                                             basePath=''
+                                                             onFileItemClick={this.onFileItemClick}/>;
+                                }
+                                return <DocumentFolderItem folderName={f.folderName}
+                                                           project={this.props.project} basePath=''
+                                                           contents={f.contents}
+                                                           onFileItemClick={this.onFileItemClick}/>;
                             })}
                         </ul>
                     </div>

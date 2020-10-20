@@ -25,16 +25,44 @@
     overflow: auto;
 }
 
-.FileItem, .FolderItem {
-    padding: 5px
-}
-
-.FileItem:hover {
-    background-color: #dcdcdc;
-}
-
 .FileItem {
+    white-space: nowrap;
     color: black;
+}
+
+.FileItem :hover {
+    background-color: #dcdcdc;
+
+}
+
+.FileItem div {
+    padding: 0.9rem;
+}
+
+.FolderItem {
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.FolderItem > :first-child :hover {
+    background-color: #dcdcdc;
+
+}
+
+.FolderItem div {
+    min-width: fit-content;
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+}
+
+.FolderItem div div {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+}
+
+.CatalogueIndent {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
 }
 
 .FileContent {
@@ -62,7 +90,8 @@
     position: sticky;
     top: 0;
     height: 100vh;
-    width: 20%;
+    max-width: 16%;
+    min-width: 16%;
     border: 0 solid #dcdcdc;
     border-right-width: 1px;
 }
@@ -78,7 +107,7 @@
 }
 
 .DocumentCatalogueBody {
-    padding: 0 0.9rem;
+    padding: 0;
 }
 
 .CloseProjectLink {
@@ -86,13 +115,12 @@
 }
 
 .DocumentCatalogueContainer ul {
-    padding-inline-start: 0.9rem;
+    padding-inline-start: 0;
     text-align: left;
 }
 
 .DocumentCatalogueTopFolder {
     overflow: auto;
-    padding-inline-start: 1.1rem;
     height: calc(87vh - 10px);
     margin-block-start: 0;
     margin-block-end: 0;
