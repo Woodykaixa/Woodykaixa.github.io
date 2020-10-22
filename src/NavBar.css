@@ -2,6 +2,7 @@
     padding: 0 60px;
     min-height: 3rem;
     background-color: #282c34;
+    box-shadow: 0 2px 10px #4c5363;
 }
 
 .NavBarMain {
@@ -71,6 +72,15 @@
 
 .UserInfo li {
     margin: auto;
+}
+
+.UserInfoLoginButton {
+    background-color: transparent;
+    border-width: 0;
+    display: inline;
+    color: white;
+    opacity: 0.6;
+    font-size: 1.17rem;
 }
 
 .ToggleButton {

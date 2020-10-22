@@ -13,3 +13,11 @@ export interface ResponsiveComponentProps {
     screenWidth: number,
     isLargeScreen: boolean
 }
+
+/**
+ * 服务器响应基本格式
+ */
+export interface ServerResponse {
+    err: number,
+    data: string | Array<any> | object
+}

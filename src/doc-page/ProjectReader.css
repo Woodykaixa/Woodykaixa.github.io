@@ -1,7 +1,6 @@
 .ProjectReaderContainer {
     display: flex;
-    min-height: calc(100vh - 3rem - 40px);
-    margin: 0 calc(-4rem - 15px);
+
 }
 
 .FileContainer {

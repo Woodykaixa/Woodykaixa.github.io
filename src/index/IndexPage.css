@@ -7,11 +7,18 @@
 
 .IndexPageInfoContainer {
     display: flex;
+    margin: 0 2rem;
+    padding: 5rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.IndexPageInfo {
+    display: flex;
+    flex-direction: row;
 }
 
 .IndexPageAvatarBox {
-    margin: 2rem 0;
-    padding: 0;
 }
 
 .IndexPageAvatarBox img {
@@ -33,13 +40,29 @@
     font-weight: bold;
 }
 
-.IndexPageCompanyBox {
+.IndexPageCompanyBox, .IndexPageBlogBox, .IndexPageLocationBox {
     font-weight: bold;
 }
 
-.IndexPageRepoList {
+.IndexPageProfBox {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.IndexPageProfBox div {
+    padding: 10px;
+}
+
+.IndexPageRepoDiv h3 {
+    font-size: 1.5rem;
     text-align: left;
-    padding-inline-start: 3rem;
+}
+
+.IndexPageRepoList {
+    padding-inline-start: 0;
+    padding-block-end: 1rem;
+    margin-block-end: 0;
 }
 
 .IndexPageRepoList h3 {
@@ -47,21 +70,58 @@
 }
 
 .IndexPageRepoList li {
-    padding-inline-start: 4rem;
+    padding-inline-start: 0;
+    box-sizing: border-box;
+    padding: 16px;
 }
 
-.IndexPageRepoList a {
-    font-size: 1.3rem;
-    font-weight: bold;
+.RepoTagContainer {
+    display: flex;
+    height: 200px;
+    padding: 8px 16px;
+    flex-direction: column;
+    border: gray solid 2px;
+    border-radius: 4px;
+    position: relative;
 }
 
-.IndexPageRepoList a:active {
-    color: #61dafb;
+.RepoTagContainer h4 {
+    text-align: left;
+    color: black;
+}
+
+.RepoTagContainer p {
+    text-align: left;
+    color: gray;
+}
+
+.RepoTagInfoContainer {
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    left: 8px;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
+    .IndexPageContainer {
+        width: 100%;
+        padding: 0;
+    }
+
     .IndexPageInfoContainer {
         display: block;
+        padding: 5px 0 0;
+    }
+
+    .IndexPageInfo {
+        flex-direction: column;
+    }
+
+    .IndexPageProfBox {
+        padding-left: 0;
+        flex-direction: column;
+        margin: 2rem auto;
     }
 
     .IndexPageInfoBox {

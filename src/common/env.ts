@@ -1,10 +1,13 @@
 export const serverUrl =
     process.env.NODE_ENV === 'production' ?
-        'https://www.kaixa.cn/' :
-        'http://127.0.0.1:5000/';
+        'https://www.kaixa.cn' :
+        'https://www.kaixa.cn';
 
 export const urlFor = (path: string) => {
-    return serverUrl + path;
+    if (path.startsWith('/')) {
+        return serverUrl + path;
+    }
+    return serverUrl + '/' + path;
 };
 
 export const webUrl =

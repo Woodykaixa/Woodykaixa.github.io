@@ -38,7 +38,7 @@
 }
 
 .MainContent {
-    margin: 0 4rem;
+    margin: 0;
     padding: 0 15px;
 }
 
@@ -46,6 +46,15 @@
     .MainContent {
         margin: 0;
     }
+}
+
+.SplitLine {
+    height: 20px;
+    border-color: gray;
+    border-style: solid;
+    border-width: 0;
+    border-top-width: 2px;
+    margin: 20px -8px;
 }
 
 ul {

@@ -25,28 +25,26 @@ class NavBarItem extends React.Component<ResponsiveNavBarItemProp, any> {
 
 interface UserInfoProps {
     loggedIn: boolean,
-    showingLogin: boolean,
-    onPageChanged: (showLogin: boolean) => void
+    openLoginModal: () => void,
+    requestLogout: () => Promise<boolean>
 }
 
 class UserInfo extends React.Component<UserInfoProps, any> {
 
-    toLogin = () => {
-        this.props.onPageChanged(true);
-    }
-
-    toRegister = () => {
-        this.props.onPageChanged(false);
+    tryLogout = async () => {
+        if (!await this.props.requestLogout()) {
+            alert('error');
+        }
     }
 
     render() {
         let authButton;
         if (this.props.loggedIn) {
-            authButton = <Link to='/logout'> 退出登录 </Link>;
-        } else if (this.props.showingLogin) {
-            authButton = <Link to="/register" onClick={this.toRegister}>去注册</Link>;
+            authButton =
+                <button className='UserInfoLoginButton' onClick={this.tryLogout}>退出登录</button>;
         } else {
-            authButton = <Link to="/login" onClick={this.toLogin}>去登录</Link>;
+            authButton = <button className='UserInfoLoginButton'
+                                 onClick={this.props.openLoginModal}>登录/注册</button>;
         }
 
         return (
@@ -60,26 +58,23 @@ class UserInfo extends React.Component<UserInfoProps, any> {
 export interface NavBarProps {
     items: NavBarItemProps[],
     title: string,
-    loggedIn: boolean
+    loggedIn: boolean,
+    openLoginModal: () => void
 
 }
 
 interface ResponsiveNarBarProps extends ResponsiveComponentProps, NavBarProps {
+    requestLogout: () => Promise<boolean>
 }
 
 interface NavBarState {
-    showingLoginPage: boolean,
     showNavBarContent: boolean
 }
 
 export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> {
     constructor(props: ResponsiveNarBarProps) {
         super(props);
-        this.state = {showingLoginPage: true, showNavBarContent: false};
-    }
-
-    handleShowingPageChanged = (showLogin: boolean) => {
-        this.setState({showingLoginPage: showLogin});
+        this.state = {showNavBarContent: false};
     }
 
     onToggleButtonClick = () => {
@@ -102,8 +97,8 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
                                         isLargeScreen={this.props.isLargeScreen}/>)}
                     </ul>
                     <UserInfo loggedIn={this.props.loggedIn}
-                              showingLogin={this.state.showingLoginPage}
-                              onPageChanged={this.handleShowingPageChanged}/>
+                              openLoginModal={this.props.openLoginModal}
+                              requestLogout={this.props.requestLogout}/>
                 </div>
             );
         } else if (this.state.showNavBarContent) {
@@ -115,8 +110,8 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
                                     isLargeScreen={this.props.isLargeScreen}/>)}
                     <li>
                         <UserInfo loggedIn={this.props.loggedIn}
-                                  showingLogin={this.state.showingLoginPage}
-                                  onPageChanged={this.handleShowingPageChanged}/>
+                                  openLoginModal={this.props.openLoginModal}
+                                  requestLogout={this.props.requestLogout}/>
                     </li>
                 </ul>
             );

@@ -1,0 +1,43 @@
+.LoginForm {
+    min-width: 310px;
+    background-color: #ececec;
+    border-radius: 5px;
+    border-color: gray;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.LoginFormButtonArea {
+    display: flex;
+    margin: 30px 10px 10px;
+}
+
+.LoginFormCloseButton {
+    border-width: 0;
+    background-color: transparent;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.LoginFormCloseButton :active {
+    border-width: 0;
+}
+
+.LoginFormButtonArea div {
+    display: flex;
+    width: 50%;
+}
+
+.LoginFormButtonArea button {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .LoginFormContainer form {
+        width: 100%;
+        max-width: 100%;
+    }
+}

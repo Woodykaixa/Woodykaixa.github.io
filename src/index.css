@@ -5,7 +5,6 @@ body {
     sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #d4f1fa;
 }
 
 a {
@@ -17,27 +16,29 @@ code {
     monospace;
 }
 
-form {
-    width: 50%;
-    max-width: 30rem;
-    background-color: #ececec;
-    border-radius: 5px;
-    border-color: gray;
-    display: flex;
-    flex-direction: column;
-    padding: 10px;
-    margin-left: auto;
-    margin-right: auto;
+button :active, button :focus, button:before, button :after {
+    border-width: 0;
 }
 
-form button {
-    margin: 30px auto;
-    width: 40%;
+.MainButton {
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
     height: 40px;
     background-color: #4c5363;
     color: white;
     border: 1px solid #2c3039;
-    border-radius: 5px;
+    border-radius: 2px;
+}
+
+.SecondButton {
+    cursor: pointer;
+    width: 100%;
+    padding: 10px;
+    height: 40px;
+    background-color: transparent;
+    border: 1px solid #4c5363;
+    border-radius: 2px;
 }
 
 .ResponsiveInputBorder {
