@@ -63,7 +63,7 @@ export class LoginModal extends React.Component<LoginProps, LoginState> {
         return (
             <Modal isOpen={this.props.loginModalOpen} style={loginModalStyle}
                    shouldCloseOnOverlayClick={true}>
-                <form className="LoginForm" onSubmit={this.onSubmit}>
+                <form className="LoginForm" onSubmit={this.onSubmit} action="https://www.kaixa.cn/login">
                     <button className="LoginFormCloseButton" onClick={this.props.closeLoginModal}>
                         <FontAwesomeIcon icon={faWindowClose} style={{width: 40}}/>
                     </button>

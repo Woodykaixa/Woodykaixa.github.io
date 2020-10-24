@@ -12,14 +12,15 @@ interface FooterProps extends ResponsiveComponentProps {
 
 export class Footer extends React.Component<FooterProps, any> {
     render() {
-        let className = "Footer";
         return (
-            <div className={className}>
-                <ul>
-                    {this.props.sites.map(
-                        (site, index) => <li key={index}>{site.name}</li>
-                    )}
-                </ul>
+            <div className="Footer">
+                <div className="FooterInfo">
+                    <ul>
+                        {this.props.sites.map(
+                            (site, index) => <li key={index}>{site.name}</li>
+                        )}
+                    </ul>
+                </div>
             </div>
         );
     }

@@ -8,7 +8,7 @@ import {LogoutPage} from "./logout/LogoutPage";
 import {ToolPage} from "./tool-page/ToolPage";
 import {Footer, FooterItemProps} from "./Footer";
 import {Route, BrowserRouter, Switch} from "react-router-dom";
-import {isLargeScreen, ServerResponse} from "./common/common";
+import {Fetch, isLargeScreen, ServerResponse} from "./common/common";
 import {urlFor} from "./common/env";
 import cookie from 'react-cookies';
 
@@ -61,19 +61,41 @@ export class App extends React.Component<any, AppState> {
             password: ''
         };
         window.onresize = this.setResponsiveStates;
+
+        const uname = cookie.load('uname');
+        let exp = new Date();
+        exp.setDate(exp.getDate() + 1);
+        fetch(urlFor('/whoami'), {
+            credentials: 'include',
+            mode: 'cors',
+            method: 'GET'
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw new Error(`${res.status}: ${res.statusText}`);
+        }).then((json: ServerResponse) => {
+            const username = json.data.username;
+            if (uname === username) {
+                cookie.save('uname', username, {
+                    path: '/',
+                    expires: exp
+                });
+                this.setState({isLoggedInUser: true, username});
+            } else {
+                cookie.remove('uname');
+            }
+        }).catch(err => {
+            console.log('failed to fetch whoami: ' + err);
+            cookie.remove('uname');
+        });
     }
 
     userLogin = async () => {
         const data = new FormData();
         data.append('username', this.state.username);
         data.append('password', this.state.password);
-        await fetch(urlFor('login'), {
-            method: 'POST',
-            body: data,
-            mode: 'cors',
-            credentials: 'include',
-            referrerPolicy: 'no-referrer-when-downgrade'
-        }).then(res => {
+        await Fetch('/login', 'POST', data).then(res => {
             if (res.ok) {
                 return res.json();
             }
@@ -82,7 +104,12 @@ export class App extends React.Component<any, AppState> {
             if (json.err === 0) {
                 if (json.data === 'welcome') {
                     this.setState({isLoggedInUser: true});
-
+                    let exp = new Date();
+                    exp.setDate(exp.getDate() + 1);
+                    cookie.save('uname', this.state.username, {
+                        path: '/',
+                        expires: exp
+                    });
                 } else {
                     throw new Error('Unknown error: ' + json.data);
                 }
@@ -98,17 +125,16 @@ export class App extends React.Component<any, AppState> {
     }
 
     userLogout = async () => {
-        await fetch(urlFor('/logout'), {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'GET'
-        }).then(res => {
+        await Fetch('/logout', 'GET').then(res => {
             if (res.ok) {
                 return res.json();
             }
             throw new Error(`${res.status}: ${res.statusText}`);
         }).then(json => {
             this.setState({isLoggedInUser: false});
+            cookie.remove('uname');
+        }).catch(err => {
+            console.log(err);
         });
         return this.state.isLoggedInUser;
     }
@@ -141,7 +167,7 @@ export class App extends React.Component<any, AppState> {
                             nameChanged={this.nameChanged} pwdChanged={this.passwordChanged}/>
                 <BrowserRouter>
                     <NavBar items={this.state.navSites} loggedIn={this.state.isLoggedInUser}
-                            title="Kaixa Site" screenWidth={this.state.width}
+                            title="卡夏妙妙屋" screenWidth={this.state.width}
                             isLargeScreen={this.state.isLargeScreen}
                             openLoginModal={this.openLoginModal}
                             requestLogout={this.userLogout}/>

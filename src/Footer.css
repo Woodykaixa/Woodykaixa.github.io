@@ -1,8 +1,9 @@
 .Footer {
-    height: 40px;
+    height: 150px;
     padding: 0 0.2rem;
-    background-color: #282c34;
+    background-color: #039BE5;
     display: flex;
+    flex-direction: column;
 }
 
 .FixBottom {
@@ -12,7 +13,7 @@
     right: 0;
 }
 
-.Footer ul {
+.FooterInfo ul {
     list-style: none;
     align-items: center;
     display: flex;
@@ -21,7 +22,7 @@
     width: 100%;
 }
 
-.Footer li {
+.FooterInfo li {
     color: white;
     opacity: 0.6;
     margin: 0 0.4rem;
@@ -29,20 +30,37 @@
     width: 100%;
 }
 
+.ModuleUsed {
+    display: flex;
+    flex-direction: row;
+}
+
+.ModuleUsed ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+    display: flex;
+    flex-flow: column;
+}
+
+.ModuleUsed li {
+    display: inline;
+}
+
 @media (min-width: 768px) {
     .Footer {
         padding: 0 60px;
     }
 
-    .Footer ul {
+    .FooterInfo  ul {
         flex-direction: row;
     }
 
-    .Footer li {
+    .FooterInfo  li {
         width: fit-content;
     }
 
-    .Footer li:not(:nth-last-child(-n+1)):after {
+    .FooterInfo  li:not(:nth-last-child(-n+1)):after {
         content: '|';
         color: white;
         opacity: 0.6;

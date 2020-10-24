@@ -2,8 +2,7 @@ import React from 'react';
 import {ProjectReader, ProjectFolder} from "./ProjectReader";
 import {Switch, Redirect, Route, Link, BrowserRouter} from 'react-router-dom';
 import "./DocPage.css";
-import {urlFor} from "../common/env";
-import {ResponsiveComponentProps} from "../common/common";
+import {Fetch, ResponsiveComponentProps} from "../common/common";
 
 interface DocLinkProps {
     displayName: string,
@@ -63,10 +62,7 @@ export class DocPage extends React.Component<DocProps, DocState> {
     }
 
     componentDidMount() {
-        fetch(urlFor('projectDoc'), {
-            mode: 'cors',
-            credentials: 'include'
-        }).then(res => res.json()).then(json => {
+        Fetch('projectDoc', 'GET').then(res => res.json()).then(json => {
             this.setState({projects: json as Project[], ProjectsQueried: true});
         });
 

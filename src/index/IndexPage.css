@@ -1,8 +1,16 @@
 .IndexPageContainer {
     width: 70%;
-    margin: 0 auto;
-    padding: 0 15px;
     background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.28);
+    padding: 0 15px;
+    border: rgba(0, 0, 0, 0.12) solid 1px;
+    margin: 10px auto 20px;
+    border-radius: 2px;
+}
+
+.IndexPageContainer p {
+    text-align: left;
+    padding-inline-start: 10px;
 }
 
 .IndexPageInfoContainer {
@@ -46,17 +54,21 @@
 
 .IndexPageProfBox {
     display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    margin-block-end: 20px;
 }
 
 .IndexPageProfBox div {
     padding: 10px;
 }
 
-.IndexPageRepoDiv h3 {
-    font-size: 1.5rem;
-    text-align: left;
+.ParaTitle {
+    margin: 0;
+    padding-block-start: 40px;
+    padding-block-end: 40px;
+    font-size: 26px;
+    font-weight: 400;
 }
 
 .IndexPageRepoList {
@@ -72,7 +84,6 @@
 .IndexPageRepoList li {
     padding-inline-start: 0;
     box-sizing: border-box;
-    padding: 16px;
 }
 
 .RepoTagContainer {
@@ -80,19 +91,27 @@
     height: 200px;
     padding: 8px 16px;
     flex-direction: column;
-    border: gray solid 2px;
-    border-radius: 4px;
+    border-bottom: rgba(0, 0, 0, 0.12) solid 1px;
     position: relative;
 }
 
-.RepoTagContainer h4 {
+.RepoTagContainer h3 {
     text-align: left;
-    color: black;
+    color: #039BE5;
+    font-weight: 600;
+    font-size: 20px;
+    margin-block-start: 0.5rem;
+    margin-block-end: 0.5rem;
+}
+
+.RepoTagContainer a:hover {
+    text-decoration-line: underline;
+    color: #039BE5;
 }
 
 .RepoTagContainer p {
     text-align: left;
-    color: gray;
+    color: rgba(0, 0, 0, 0.87);
 }
 
 .RepoTagInfoContainer {

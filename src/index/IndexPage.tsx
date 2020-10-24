@@ -22,12 +22,17 @@ interface RepoTagProps extends RepoLink, ResponsiveComponentProps {
 
 class RepoTag extends React.Component<RepoTagProps, any> {
     render() {
+        let displayTitle = this.props.title;
+        if (this.props.language) {
+            displayTitle += ` (${this.props.language})`;
+        }
         return (
             <div className="RepoTagContainer">
                 <a href={this.props.link}>
-                    <h4>{this.props.title}</h4>
-                    <p>{this.props.description}</p>
+                    <h3>{displayTitle}</h3>
                 </a>
+                <p>{this.props.description}</p>
+
                 <div className="RepoTagInfoContainer">
                     <span style={{width: 10}}/>
                     <span>
@@ -85,9 +90,13 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                     name: json.name,
                     company: json.company,
                     github: json.html_url,
-                    repos: json.repos,
                     location: json.location,
                     blog: json.blog
+                });
+                let repos = json.repos as RepoLink[];
+                repos.sort((a, b) => b.star - a.star);
+                this.setState({
+                    repos
                 });
             } else {
                 this.setState({
@@ -101,11 +110,12 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
     render() {
         if (this.state.fetching) {
             return <div className="FullPage">
-                Loading. Please wait
+                Loading. Please wait...
             </div>;
         } else if (!this.state.fetchSuccess) {
             return <div className="FullPage">
-                Fetch failed.
+                Failed in fetching my_profile. Please try refresh or
+                <a href="mailto:690750353@qq.com">contact with me</a>
             </div>;
         }
         return (
@@ -140,7 +150,8 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                         </div>
                     </div>
                 </div>
-                <div className="IndexPageContainer FullPage">
+                <div className="IndexPageContainer">
+                    <h3 className="ParaTitle">我的统计信息</h3>
                     <div className="IndexPageProfBox">
                         <div>
                             <img style={{maxWidth: '100%'}}
@@ -149,23 +160,42 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                         </div>
                         <div>
                             <img style={{maxWidth: '100%'}}
-                                 src="https://github-readme-stats.vercel.app/api/top-langs/?username=Woodykaixa&layout=compact&hide=html)"
-                                 alt=""/>
+                                 src="https://github-readme-stats.vercel.app/api/top-langs/?username=Woodykaixa&layout=compact&hide=html&card_width=439.94"
+                                 alt="My favorite languages"/>
                         </div>
                     </div>
                     <div className="SplitLine"/>
+                    <h3 className="ParaTitle">我的代码</h3>
+                    <ul className="IndexPageRepoList">
+                        {this.state.repos.map((repo, index) =>
+                            <li key={index}>
+                                <RepoTag title={repo.title} link={repo.link}
+                                         description={repo.description} fork={repo.fork}
+                                         star={repo.star} language={repo.language}
+                                         isLargeScreen={this.props.isLargeScreen}
+                                         screenWidth={this.props.screenWidth}/>
+                            </li>)}
+                    </ul>
+                    <h3 className="ParaTitle">关于本站</h3>
                     <div>
-                        <h3>代码仓库</h3>
-                        <ul className="IndexPageRepoList">
-                            {this.state.repos.map((repo, index) =>
-                                <li key={index}>
-                                    <RepoTag title={repo.title} link={repo.link}
-                                             description={repo.description} fork={repo.fork}
-                                             star={repo.star} language={repo.language}
-                                             isLargeScreen={this.props.isLargeScreen}
-                                             screenWidth={this.props.screenWidth}/>
-                                </li>)}
-                        </ul>
+                        <p>
+                            欢迎来到卡夏妙妙屋。
+                        </p>
+                        <p>
+                            这里是我的个人网站，也是我的网页制作大作业。
+                            <b>关于</b>页面展示了我的个人信息，也声明了本网站的信息；
+                            <b>文档</b>页面可以用于展示我自己参与的项目文档，注册用户根据自己的权限访问相应的文档，同时还有一个公开文档作为博客使用；
+                            <b>工具</b>页面是一些小工具，供部分人使用。
+                        </p>
+                        <p>
+                            关于本站使用到的框架：
+                        </p>
+                        <div>
+                            <p>React</p>
+                            <p>React-Dom</p>
+                            <p>Vditor</p>
+                            <p>FontAwesome</p>
+                        </div>
                     </div>
                 </div>
             </div>

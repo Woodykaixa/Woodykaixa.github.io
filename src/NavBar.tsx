@@ -32,8 +32,8 @@ interface UserInfoProps {
 class UserInfo extends React.Component<UserInfoProps, any> {
 
     tryLogout = async () => {
-        if (!await this.props.requestLogout()) {
-            alert('error');
+        if (await this.props.requestLogout()) {
+            alert('failed to logout');
         }
     }
 
@@ -120,7 +120,7 @@ export class NavBar extends React.Component<ResponsiveNarBarProps, NavBarState> 
         return (
             <div className="NavBarContainer">
                 <div className="NavBarMain">
-                    <span className="Title">{this.props.title}</span>
+                    <div className="Title">{this.props.title}</div>
                     {this.props.isLargeScreen ? NavBarContent : toggleButton}
                 </div>
                 {this.props.isLargeScreen ? null : NavBarContent}
