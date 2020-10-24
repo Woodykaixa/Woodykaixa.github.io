@@ -1,20 +1,13 @@
 import React from 'react';
 import "./IndexPage.css";
-import {urlFor} from "../common/env";
+import {Fetch} from "../common/common";
 import {ResponsiveComponentProps} from "../common/common";
 import {faBuilding} from "@fortawesome/free-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
 import {faLink} from "@fortawesome/free-solid-svg-icons";
+import {AdminProfileData, AdminProfileResponse, RepoLink} from "../common/ServerInterface";
 
-interface RepoLink {
-    title: string,
-    link: string,
-    description: string,
-    fork: number,
-    star: number,
-    language: string
-}
 
 interface RepoTagProps extends RepoLink, ResponsiveComponentProps {
 
@@ -48,16 +41,9 @@ class RepoTag extends React.Component<RepoTagProps, any> {
     }
 }
 
-interface IndexPageState {
+interface IndexPageState extends AdminProfileData {
     fetching: boolean,
     fetchSuccess: boolean,
-    avatar: string,
-    name: string,
-    company: string,
-    github: string,
-    repos: RepoLink[],
-    blog: string,
-    location: string
 }
 
 interface IndexPageProps extends ResponsiveComponentProps {
@@ -69,42 +55,55 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
         super(props);
         this.state = {
             name: '',
-            avatar: '',
             company: '',
             github: '',
             blog: '',
             location: '',
             repos: [],
             fetching: true,
-            fetchSuccess: false
+            fetchSuccess: false,
+            loginName: '',
+            followers: 0,
+            following: 0,
+            repoCount: 0,
+            bio: ''
         };
     }
 
     componentDidMount() {
-        fetch(urlFor('my_profile')).then(res => res.json()).then(json => {
-            if (json.success) {
+        Fetch('admin_profile', 'GET').then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw new Error(`${res.status}: ${res.statusText}`);
+        }).then((json: AdminProfileResponse) => {
+                if (json.err) {
+                    this.setState({
+                        fetching: false,
+                        fetchSuccess: false
+                    });
+                    throw new Error(json.data as string);
+                }
+                const data = json.data as AdminProfileData;
                 this.setState({
                     fetchSuccess: true,
                     fetching: false,
-                    avatar: json.avatar_url,
-                    name: json.name,
-                    company: json.company,
-                    github: json.html_url,
-                    location: json.location,
-                    blog: json.blog
+                    name: data.name,
+                    company: data.company,
+                    github: data.github,
+                    location: data.location,
+                    blog: data.blog,
+                    bio: data.bio,
+                    following: data.following,
+                    followers: data.followers,
+                    repoCount: data.repoCount
                 });
-                let repos = json.repos as RepoLink[];
-                repos.sort((a, b) => b.star - a.star);
+                data.repos.sort((a, b) => b.star - a.star);
                 this.setState({
-                    repos
-                });
-            } else {
-                this.setState({
-                    fetching: false,
-                    fetchSuccess: false
+                    repos: data.repos
                 });
             }
-        });
+        );
     }
 
     render() {
@@ -113,9 +112,9 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                 Loading. Please wait...
             </div>;
         } else if (!this.state.fetchSuccess) {
-            return <div className="FullPage">
+            return <div className="ErrorMessage FullPage">
                 Failed in fetching my_profile. Please try refresh or
-                <a href="mailto:690750353@qq.com">contact with me</a>
+                <a href="mailto:690750353@qq.com"> contact with me</a>
             </div>;
         }
         return (
@@ -144,6 +143,8 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                 {this.state.location}
                             </div>
                             <div className="IndexPageLinkBox">
+                                <FontAwesomeIcon icon={faLink}
+                                                 style={{width: 16, marginRight: 5}}/>
                                 <a href={this.state.github}>{this.state.github}</a>
                             </div>
 
@@ -173,7 +174,8 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                          description={repo.description} fork={repo.fork}
                                          star={repo.star} language={repo.language}
                                          isLargeScreen={this.props.isLargeScreen}
-                                         screenWidth={this.props.screenWidth}/>
+                                         screenWidth={this.props.screenWidth}
+                                         isForked={repo.isForked}/>
                             </li>)}
                     </ul>
                     <h3 className="ParaTitle">关于本站</h3>

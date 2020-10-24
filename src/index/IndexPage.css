@@ -8,6 +8,20 @@
     border-radius: 2px;
 }
 
+.ErrorMessage {
+    padding-top: 20px;
+    font-size: 20px;
+}
+
+.ErrorMessage a {
+    color: #039BE5;
+}
+
+.ErrorMessage a:hover {
+    text-decoration-line: underline;
+    color: #039BE5;
+}
+
 .IndexPageContainer p {
     text-align: left;
     padding-inline-start: 10px;
@@ -46,6 +60,10 @@
 
 .IndexPageLinkBox {
     font-weight: bold;
+}
+
+.IndexPageLinkBox a {
+    color: black;
 }
 
 .IndexPageCompanyBox, .IndexPageBlogBox, .IndexPageLocationBox {

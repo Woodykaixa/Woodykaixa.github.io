@@ -16,13 +16,6 @@ export interface ResponsiveComponentProps {
     isLargeScreen: boolean
 }
 
-/**
- * 服务器响应基本格式
- */
-export interface ServerResponse {
-    err: number,
-    data: string | Array<any> | object | any
-}
 
 type BodyType =
     Blob

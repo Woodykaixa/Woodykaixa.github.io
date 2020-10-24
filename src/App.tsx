@@ -8,8 +8,12 @@ import {LogoutPage} from "./logout/LogoutPage";
 import {ToolPage} from "./tool-page/ToolPage";
 import {Footer, FooterItemProps} from "./Footer";
 import {Route, BrowserRouter, Switch} from "react-router-dom";
-import {Fetch, isLargeScreen, ServerResponse} from "./common/common";
-import {urlFor} from "./common/env";
+import {Fetch, isLargeScreen} from "./common/common";
+import {
+    WhoAmIResponse,
+    LoginResponse,
+    RegisterResponse
+} from "./common/ServerInterface";
 import cookie from 'react-cookies';
 
 interface AppNavBarSiteItem {
@@ -65,18 +69,14 @@ export class App extends React.Component<any, AppState> {
         const uname = cookie.load('uname');
         let exp = new Date();
         exp.setDate(exp.getDate() + 1);
-        fetch(urlFor('/whoami'), {
-            credentials: 'include',
-            mode: 'cors',
-            method: 'GET'
-        }).then(res => {
+        Fetch('/auth/whoami', 'GET').then(res => {
             if (res.ok) {
                 return res.json();
             }
             throw new Error(`${res.status}: ${res.statusText}`);
-        }).then((json: ServerResponse) => {
+        }).then((json: WhoAmIResponse) => {
             const username = json.data.username;
-            if (uname === username) {
+            if (username !== null && uname === username) {
                 cookie.save('uname', username, {
                     path: '/',
                     expires: exp
@@ -91,30 +91,48 @@ export class App extends React.Component<any, AppState> {
         });
     }
 
-    userLogin = async () => {
+    userRegister = async () => {
         const data = new FormData();
         data.append('username', this.state.username);
         data.append('password', this.state.password);
-        await Fetch('/login', 'POST', data).then(res => {
+        await Fetch('/auth/register', 'POST', data).then(res => {
             if (res.ok) {
                 return res.json();
             }
             throw new Error(`${res.status}: ${res.statusText}`);
-        }).then((json: ServerResponse) => {
-            if (json.err === 0) {
-                if (json.data === 'welcome') {
-                    this.setState({isLoggedInUser: true});
-                    let exp = new Date();
-                    exp.setDate(exp.getDate() + 1);
-                    cookie.save('uname', this.state.username, {
-                        path: '/',
-                        expires: exp
-                    });
-                } else {
-                    throw new Error('Unknown error: ' + json.data);
-                }
-            } else {
+        }).then((json: RegisterResponse) => {
+            if (json.err) {
+                throw new Error(json.data);
+            }
+            alert(json.data);
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    userLogin = async () => {
+        const data = new FormData();
+        data.append('username', this.state.username);
+        data.append('password', this.state.password);
+        await Fetch('/auth/login', 'POST', data).then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw new Error(`${res.status}: ${res.statusText}`);
+        }).then((json: LoginResponse) => {
+            if (json.err) {
                 throw new Error(`${json.err}: ${json.data}`);
+            }
+            if (json.data === 'welcome') {
+                this.setState({isLoggedInUser: true});
+                let exp = new Date();
+                exp.setDate(exp.getDate() + 1);
+                cookie.save('uname', this.state.username, {
+                    path: '/',
+                    expires: exp
+                });
+            } else {
+                throw new Error('Unknown error: ' + json.data);
             }
         }).catch(err => {
             console.log(err);
@@ -130,7 +148,7 @@ export class App extends React.Component<any, AppState> {
                 return res.json();
             }
             throw new Error(`${res.status}: ${res.statusText}`);
-        }).then(json => {
+        }).then(() => {
             this.setState({isLoggedInUser: false});
             cookie.remove('uname');
         }).catch(err => {

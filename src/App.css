@@ -60,5 +60,5 @@ ul {
 }
 
 .FullPage {
-    min-height: calc(100vh - 3rem - 40px);
+    min-height: calc(100vh - 4.5rem - 150px);
 }
