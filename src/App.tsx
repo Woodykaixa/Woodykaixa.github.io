@@ -73,7 +73,7 @@ export class App extends React.Component<any, AppState> {
             if (res.ok) {
                 return res.json();
             }
-            throw new Error(`${res.status}: ${res.statusText}`);
+            throw new Error(res.statusText);
         }).then((json: WhoAmIResponse) => {
             const username = json.data.username;
             if (username !== null && uname === username) {
@@ -99,7 +99,7 @@ export class App extends React.Component<any, AppState> {
             if (res.ok) {
                 return res.json();
             }
-            throw new Error(`${res.status}: ${res.statusText}`);
+            throw new Error(res.statusText);
         }).then((json: RegisterResponse) => {
             if (json.err) {
                 throw new Error(json.data);
@@ -118,7 +118,7 @@ export class App extends React.Component<any, AppState> {
             if (res.ok) {
                 return res.json();
             }
-            throw new Error(`${res.status}: ${res.statusText}`);
+            throw new Error(res.statusText);
         }).then((json: LoginResponse) => {
             if (json.err) {
                 throw new Error(`${json.err}: ${json.data}`);
@@ -147,7 +147,7 @@ export class App extends React.Component<any, AppState> {
             if (res.ok) {
                 return res.json();
             }
-            throw new Error(`${res.status}: ${res.statusText}`);
+            throw new Error(res.statusText);
         }).then(() => {
             this.setState({isLoggedInUser: false});
             cookie.remove('uname');

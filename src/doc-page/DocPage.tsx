@@ -1,8 +1,9 @@
 import React from 'react';
-import {ProjectReader, ProjectFolder} from "./ProjectReader";
-import {Switch, Redirect, Route, Link, BrowserRouter} from 'react-router-dom';
+import {ProjectReader} from "./ProjectReader";
+import {Switch, Route, Link, BrowserRouter} from 'react-router-dom';
 import "./DocPage.css";
 import {Fetch, ResponsiveComponentProps} from "../common/common";
+import {ProjectItem, DocResponse, ProjectFolder} from "../common/ServerInterface";
 
 interface DocLinkProps {
     displayName: string,
@@ -16,14 +17,9 @@ class DocLink extends React.Component<DocLinkProps, any> {
     }
 }
 
-interface Project {
-    url: string,
-    name: string
-}
-
 
 interface ProjectListProps {
-    projects: Project[]
+    projects: ProjectItem[]
 }
 
 class ProjectList extends React.Component<ProjectListProps, any> {
@@ -50,7 +46,7 @@ interface DocProps extends ResponsiveComponentProps {
 
 
 interface DocState {
-    projects: Project[],
+    projects: ProjectItem[],
     projectFiles: Array<string | ProjectFolder>,
     ProjectsQueried: boolean
 }
@@ -62,8 +58,18 @@ export class DocPage extends React.Component<DocProps, DocState> {
     }
 
     componentDidMount() {
-        Fetch('projectDoc', 'GET').then(res => res.json()).then(json => {
-            this.setState({projects: json as Project[], ProjectsQueried: true});
+        Fetch('/doc', 'GET').then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw new Error(res.statusText);
+        }).then((json: DocResponse) => {
+            if (json.err) {
+                throw new Error('Failed to fetch projects');
+            }
+            this.setState({projects: json.data, ProjectsQueried: true});
+        }).catch(err => {
+            console.log(err);
         });
 
     }
@@ -73,36 +79,33 @@ export class DocPage extends React.Component<DocProps, DocState> {
     }
 
     render() {
-        if (this.props.loggedIn) {
-            if (!this.state.ProjectsQueried) {
-                return <div>
-                    loading projects. please wait.
-                </div>;
-            }
-            return (
-                <div className="FullPage">
-                    <BrowserRouter basename='/docs'>
-                        <Switch>
-                            {this.state.projects.map((project, index) =>
-                                <Route key={index} path={'/' + project.url}>
-                                    <div className="DocPageContainer">
-                                        <ProjectReader project={project.name}
-                                                       files={this.state.projectFiles}
-                                                       updateProjectFiles={this.updateProjectFiles}
-                                                       screenWidth={this.props.screenWidth}
-                                                       isLargeScreen={this.props.isLargeScreen}/>
-                                    </div>
-                                </Route>)}
-                            <Route path='/'>
-                                <ProjectList projects={this.state.projects}/>
-                            </Route>
-                        </Switch>
-                    </BrowserRouter>
-                </div>
-
-            );
+        if (!this.state.ProjectsQueried) {
+            return <div>
+                loading projects. please wait.
+            </div>;
         }
+        return (
+            <div className="FullPage">
+                <BrowserRouter basename='/docs'>
+                    <Switch>
+                        {this.state.projects.map((project, index) =>
+                            <Route key={index} path={'/' + project.url}>
+                                <div className="DocPageContainer">
+                                    <ProjectReader project={project.name}
+                                                   files={this.state.projectFiles}
+                                                   updateProjectFiles={this.updateProjectFiles}
+                                                   screenWidth={this.props.screenWidth}
+                                                   isLargeScreen={this.props.isLargeScreen}/>
+                                </div>
+                            </Route>)}
+                        <Route path='/'>
+                            <ProjectList projects={this.state.projects}/>
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
+            </div>
 
-        return <Redirect to='/login?from_link=/docs'/>;
+        );
+
     }
 }

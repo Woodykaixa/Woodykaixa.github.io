@@ -9,7 +9,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFolder, faAngleLeft, faFolderOpen} from '@fortawesome/free-solid-svg-icons';
 import {faFileAlt} from '@fortawesome/free-regular-svg-icons';
 import {urlFor} from "../common/env";
-import {ResponsiveComponentProps} from "../common/common";
+import {Fetch, ResponsiveComponentProps} from "../common/common";
+import {
+    ProjectFileResponse,
+    ProjectFolder,
+    ProjectHierarchyResponse
+} from "../common/ServerInterface";
 
 marked.setOptions({
     renderer: new marked.Renderer(),
@@ -21,10 +26,6 @@ marked.setOptions({
     smartypants: false, // 使用更为时髦的标点
 });
 
-export interface ProjectFolder {
-    folderName: string
-    contents: Array<string | ProjectFolder>
-}
 
 interface DocumentFileItemProps {
     filename: string,
@@ -37,7 +38,7 @@ class DocumentFileItem extends React.Component<DocumentFileItemProps, any> {
     render() {
         return (
             <a className="FileItem"
-               href={urlFor('project_file/') + this.props.project + this.props.basePath + '/' + this.props.filename}
+               href={urlFor('/doc/project_file/') + this.props.project + this.props.basePath + '/' + this.props.filename}
                onClick={this.props.onFileItemClick}
                key={this.props.basePath + '/' + this.props.filename}>
                 <div>
@@ -143,13 +144,18 @@ class DocumentCatalogue extends React.Component<DocumentCatalogueProps, Document
             method: 'POST',
             credentials: 'include',
             mode: 'cors'
-        }).then(res => res.json()).then(json => {
-            if (json.success) {
-                const content = (fileType === 'markdown') ?
-                    sanitize(marked(json.content)) : json.content;
-                this.props.openProjectFile(content, fileType, name);
+        }).then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw new Error(res.statusText);
+        }).then((json: ProjectFileResponse) => {
+            if (json.err) {
+                this.props.openProjectFile('error:\n' + json.data, 'text', name);
             } else {
-                this.props.openProjectFile('error:\n' + json.err, 'text', name);
+                const content = (fileType === 'markdown') ?
+                    sanitize(marked(json.data)) : json.data;
+                this.props.openProjectFile(content, fileType, name);
             }
         }).catch(() => {
             this.props.openProjectFile('failed to fetch:' + link, 'text', name);
@@ -166,7 +172,7 @@ class DocumentCatalogue extends React.Component<DocumentCatalogueProps, Document
 
     mobileRenderFileOrFolder = (base: string, file: string | ProjectFolder) => {
         if (typeof file === 'string') {
-            return <a href={urlFor('project_file/') + this.props.project + base + '/' + file}
+            return <a href={urlFor('/doc/project_file/') + this.props.project + base + '/' + file}
                       key={base + '/' + file} onClick={this.onFileItemClick}>
                 <li className="FileItem">
                     {base + '/' + file}
@@ -288,11 +294,16 @@ export class ProjectReader extends React.Component<ProjectReaderProps, ProjectRe
 
     constructor(props: ProjectReaderProps) {
         super(props);
-        fetch(urlFor('projectDoc/') + this.props.project, {
-            mode: 'cors',
-            credentials: 'include'
-        }).then(res => res.json()).then(json => {
-            this.props.updateProjectFiles(json as Array<string | ProjectFolder>);
+        Fetch('/doc/' + this.props.project, 'GET').then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+            throw new Error(res.statusText);
+        }).then((json: ProjectHierarchyResponse) => {
+            if (json.err) {
+                throw new Error(json.data as string);
+            }
+            this.props.updateProjectFiles(json.data as Array<string | ProjectFolder>);
         });
         this.state = {fileContent: '欢迎使用kaixadoc', fileType: 'markdown', filename: 'welcome'};
     }

@@ -140,6 +140,23 @@
     width: 100%;
 }
 
+.AboutSiteBlock {
+    padding-bottom: 40px;
+}
+
+.AboutSiteBlock p {
+    line-height: 30px;
+}
+
+.AboutSiteBlock a {
+    color: #039BE5;
+}
+
+.AboutSiteBlock a:hover {
+    text-decoration-line: underline;
+    color: #039BE5;
+}
+
 @media (max-width: 768px) {
     .IndexPageContainer {
         width: 100%;

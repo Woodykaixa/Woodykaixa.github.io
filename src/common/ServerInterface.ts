@@ -47,3 +47,25 @@ export interface AdminProfileData {
 export interface AdminProfileResponse extends ServerResponse {
     data: AdminProfileData | string;
 }
+
+export interface ProjectItem {
+    name: string,
+    url: string
+}
+
+export interface DocResponse extends ServerResponse {
+    data: ProjectItem[]
+}
+
+export interface ProjectFolder {
+    folderName: string
+    contents: Array<string | ProjectFolder>
+}
+
+export interface ProjectHierarchyResponse extends ServerResponse {
+    data: Array<string | ProjectFolder> | string
+}
+
+export interface ProjectFileResponse extends ServerResponse {
+    data: string
+}

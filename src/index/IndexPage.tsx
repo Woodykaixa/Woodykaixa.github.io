@@ -157,7 +157,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                         <div>
                             <img style={{maxWidth: '100%'}}
                                  src="https://github-readme-stats.vercel.app/api?username=Woodykaixa&show_icons=true"
-                                 alt="https://github.com/anuraghazra/github-readme-stats"/>
+                                 alt="My stats"/>
                         </div>
                         <div>
                             <img style={{maxWidth: '100%'}}
@@ -179,7 +179,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                             </li>)}
                     </ul>
                     <h3 className="ParaTitle">关于本站</h3>
-                    <div>
+                    <div className="AboutSiteBlock">
                         <p>
                             欢迎来到卡夏妙妙屋。
                         </p>
@@ -190,14 +190,11 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                             <b>工具</b>页面是一些小工具，供部分人使用。
                         </p>
                         <p>
-                            关于本站使用到的框架：
+                            本页面的制作使用了如下组件：React、React-Router、React-Modal、React-Cookies、FontAwesome。
+                            同时，网页风格参考了Material Design，并使用
+                            <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a>
+                            生成统计信息。
                         </p>
-                        <div>
-                            <p>React</p>
-                            <p>React-Dom</p>
-                            <p>Vditor</p>
-                            <p>FontAwesome</p>
-                        </div>
                     </div>
                 </div>
             </div>
