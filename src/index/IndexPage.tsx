@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
 import {faLink} from "@fortawesome/free-solid-svg-icons";
 import {AdminProfileData, AdminProfileResponse, RepoLink} from "../common/ServerInterface";
+import {Loading} from "../common/LoadingComponent";
 
 
 interface RepoTagProps extends RepoLink, ResponsiveComponentProps {
@@ -108,9 +109,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
 
     render() {
         if (this.state.fetching) {
-            return <div className="FullPage">
-                Loading. Please wait...
-            </div>;
+            return <Loading/>;
         } else if (!this.state.fetchSuccess) {
             return <div className="ErrorMessage FullPage">
                 Failed in fetching my_profile. Please try refresh or
@@ -194,6 +193,11 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                             同时，网页风格参考了Material Design，并使用
                             <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a>
                             生成统计信息。
+                        </p>
+                        <p style={{marginTop: 20, textAlign: 'right', paddingRight: 10}}>
+                            <small>
+                                Copyright ©2020 Woodykaixa. All rights reserved.
+                            </small>
                         </p>
                     </div>
                 </div>

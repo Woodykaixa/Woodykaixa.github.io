@@ -1,0 +1,23 @@
+.LoadingContainer {
+    padding-top: 5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.LoadingSpin {
+    margin: 20px auto;
+    animation-name: AppLoadingSpin;
+    animation-duration: 2.5s;
+    animation-timing-function: linear;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+}
+
+@keyframes AppLoadingSpin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -58,7 +58,7 @@ export class DocPage extends React.Component<DocProps, DocState> {
     }
 
     componentDidMount() {
-        Fetch('/doc', 'GET').then(res => {
+        Fetch('/doc/', 'GET').then(res => {
             if (res.ok) {
                 return res.json();
             }
