@@ -4,7 +4,7 @@ import {Fetch} from "../common/common";
 import {ResponsiveComponentProps} from "../common/common";
 import {faBuilding} from "@fortawesome/free-regular-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faMapMarkedAlt} from "@fortawesome/free-solid-svg-icons";
+import {faMapMarkedAlt, faCode} from "@fortawesome/free-solid-svg-icons";
 import {faLink} from "@fortawesome/free-solid-svg-icons";
 import {AdminProfileData, AdminProfileResponse, RepoLink} from "../common/ServerInterface";
 import {Loading} from "../common/LoadingComponent";
@@ -95,6 +95,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                     location: data.location,
                     blog: data.blog,
                     bio: data.bio,
+                    loginName: data.loginName,
                     following: data.following,
                     followers: data.followers,
                     repoCount: data.repoCount
@@ -125,7 +126,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                  src="https://avatars1.githubusercontent.com/u/22990333?s=460&amp;u=ab4f382b52aae8a47f29de660ed2b4551e8b1d72&amp;v=4"/>
                         </div>
                         <div className="IndexPageInfoBox">
-                            <h2 className="IndexPageNameBox">{this.state.name}</h2>
+                            <h1 className='IndexPageLoginNameBox'>{this.state.loginName}</h1>
                             <div className="IndexPageCompanyBox">
                                 <FontAwesomeIcon icon={faBuilding}
                                                  style={{width: 16, marginRight: 5}}/>
@@ -136,15 +137,15 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                                  style={{width: 16, marginRight: 5}}/>
                                 {this.state.blog}
                             </div>
+                            <div className="IndexPageLinkBox">
+                                <FontAwesomeIcon icon={faCode}
+                                                 style={{width: 16, marginRight: 5}}/>
+                                <a href={this.state.github}>{this.state.github}</a>
+                            </div>
                             <div className="IndexPageLocationBox">
                                 <FontAwesomeIcon icon={faMapMarkedAlt}
                                                  style={{width: 16, marginRight: 5}}/>
                                 {this.state.location}
-                            </div>
-                            <div className="IndexPageLinkBox">
-                                <FontAwesomeIcon icon={faLink}
-                                                 style={{width: 16, marginRight: 5}}/>
-                                <a href={this.state.github}>{this.state.github}</a>
                             </div>
 
                         </div>
@@ -184,7 +185,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                         </p>
                         <p>
                             这里是我的个人网站，也是我的网页制作大作业。
-                            <b>关于</b>页面展示了我的个人信息，也声明了本网站的信息；
+                            <b>关于</b>页面展示个人信息以及网站信息；
                             <b>文档</b>页面可以用于展示我自己参与的项目文档，注册用户根据自己的权限访问相应的文档，同时还有一个公开文档作为博客使用；
                             <b>工具</b>页面是一些小工具，供部分人使用。
                         </p>

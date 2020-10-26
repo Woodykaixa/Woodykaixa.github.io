@@ -38,8 +38,8 @@
 }
 
 .MainContent {
-    margin: 0;
     padding: 0 15px;
+    margin: 4.5rem 0 0;
 }
 
 @media (max-width: 768px) {
@@ -60,5 +60,5 @@ ul {
 }
 
 .FullPage {
-    min-height: calc(100vh - 4.5rem - 150px);
+    min-height: calc(100vh - 4.5rem);
 }

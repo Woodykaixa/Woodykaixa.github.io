@@ -1,13 +1,43 @@
-.DocLink a:hover {
-    color: #61dafb;
-}
-
 
 .ProjectList {
     margin: 0;
     padding-inline-start: 0;
     padding-top: 1rem;
 }
-.DocPageContainer{
+
+.DocPageContainer {
     margin: auto -15px;
+}
+
+.ProjectListContainer {
+    width: 70%;
+    background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.28);
+    padding: 0 15px;
+    border: rgba(0, 0, 0, 0.12) solid 1px;
+    margin: 6rem auto 20px;
+    min-height: calc(100vh - 6rem);
+    border-radius: 2px;
+}
+
+.AccessibleProjectItem {
+    padding: 10px;
+    min-height: 120px;
+    border-bottom: rgba(0, 0, 0, 0.12) solid 1px;
+}
+
+.ProjectItemName {
+    text-align: left;
+}
+
+.ProjectItemName a {
+    color: #039BE5;
+    font-size: 22px;
+    word-break: break-word;
+    font-weight: 700;
+}
+
+.ProjectItemName p:before {
+    content: ' ';
+    width: 20px;
 }

@@ -17,7 +17,6 @@
 .Title {
     font-size: 28px;
     padding: 0;
-    width: 200px;
     color: white;
     font-weight: lighter;
     word-break: keep-all;
@@ -92,36 +91,127 @@
 .ToggleButton {
     outline-style: none;
     background-color: transparent;
-    border-color: #a7a7a7;
-    border-radius: 5px;
-    border-width: 1px;
-    border-style: solid;
     margin: auto 1rem auto auto;
-    width: 30px;
-    height: 30px;
-}
-
-.ToggleButton:after {
-    content: '+';
-    color: white;
-    opacity: 0.8;
-
+    border: none;
 }
 
 .ToggleButton:active {
     background-color: #42c4e5;
 }
 
+.RightSideBarMask {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 30;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+@keyframes RightSideNavBarEnter {
+    from {
+        transform: scale(0, 1);
+    }
+
+    to {
+        transform: scale(1, 1);
+    }
+}
+
+.RightSideNavBarEnter {
+    width: 55%;
+    transition: width 0.4s ease-in;
+    transform-origin: 155% 0;
+    animation: RightSideNavBarEnter 0.4s ease-in;
+}
+
+@keyframes RightSideNavBarLeave {
+    from {
+        transform: scale(1, 1);
+    }
+
+    to {
+        transform: scale(0, 1);
+    }
+}
+
+.RightSideNavBarLeave {
+    transition: width 0.4s ease-out;
+    transform-origin: 100% 0;
+    animation: RightSideNavBarLeave 0.4s ease-out;
+}
+
+.RightSideBarContainer {
+    height: 100vh;
+    position: absolute;
+    background-color: #fafafa;
+    top: 0;
+    right: 0;
+    width: 55%;
+    padding: 35px 15px;
+    text-align: left;
+    z-index: 32;
+    box-shadow: rgba(0, 0, 0, 0.12) 0 -4px 4px;
+}
+
+.RightSideUsername {
+    font-weight: 500;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    font-size: 20px;
+    word-break: break-all;
+}
+
+.RightSideBarItemContainer {
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-bottom: 14px;
+}
+
+.RightSideBarItemContainer li {
+    padding: 14px 20px;
+    font-weight: 700;
+}
+
+.RightSideBarItemContainer a {
+    color: #01579B;
+    font-size: 18px;
+}
+
+.RightSideOperationBox {
+    padding: 14px;
+    display: flex;
+}
+
+.RightSideLogout {
+    width: 45%;
+    border-radius: 2px;
+    border: none;
+    background-color: transparent;
+    color: #039BE5;
+    font-weight: 600;
+    margin-left: -7px;
+    height: 30px;
+}
+
+.RightSideLogout :active {
+    background-color: rgba(3, 155, 229, 0.4);
+}
+
+.RightSideLogin {
+    width: 45%;
+    border-radius: 2px;
+    border: none;
+    background-color: #039BE5;
+    color: white;
+    height: 30px;
+}
+
 .NarrowNavBarContainer {
     background-color: #039BE5;
-}
-
-.NarrowNavItem {
-    margin: 0;
-}
-
-.NarrowNavItem h3 {
-    text-align: left;
 }
 
 @media screen and (max-width: 768px) {
@@ -131,6 +221,7 @@
 
     .Title {
         width: fit-content;
-        margin-left: 0.5rem;
+        font-size: 24px;
+        margin-left: -10px;
     }
 }

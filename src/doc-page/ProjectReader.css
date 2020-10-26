@@ -1,6 +1,5 @@
 .ProjectReaderContainer {
     display: flex;
-
 }
 
 .FileContainer {
@@ -12,7 +11,7 @@
 
 @media screen and (max-width: 768px) {
     .ProjectReaderContainer {
-        margin: 0 -15px;
+        margin: 0;
         display: block;
     }
 }
@@ -24,44 +23,20 @@
     overflow: auto;
 }
 
-.FileItem {
+.FileItem div, .FolderItem div {
     white-space: nowrap;
     color: black;
+    padding: 20px 20px 20px 10px;
+    width: 100%;
 }
 
 .FileItem :hover {
     background-color: #dcdcdc;
-
-}
-
-.FileItem div {
-    padding: 0.9rem;
-}
-
-.FolderItem {
-    white-space: nowrap;
     cursor: pointer;
-}
-
-.FolderItem > :first-child :hover {
-    background-color: #dcdcdc;
-
 }
 
 .FolderItem div {
     min-width: fit-content;
-    padding-top: 0.45rem;
-    padding-bottom: 0.45rem;
-}
-
-.FolderItem div div {
-    padding-left: 0.9rem;
-    padding-right: 0.9rem;
-}
-
-.CatalogueIndent {
-    padding-left: 0.9rem;
-    padding-right: 0.9rem;
 }
 
 .FileContent {
@@ -85,14 +60,13 @@
 }
 
 .DocumentCatalogueContainer {
-    background-color: #f7feff;
+    background-color: #fafafa;
     position: sticky;
-    top: 0;
-    height: 100vh;
-    max-width: 16%;
-    min-width: 16%;
-    border: 0 solid #dcdcdc;
-    border-right-width: 1px;
+    top: 4.5rem;
+    height: calc(100vh - 4.5rem);
+    max-width: 18%;
+    min-width: 18%;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .DocumentCatalogueHeader {
@@ -101,12 +75,25 @@
     padding: 5px;
     height: 13vh;
     word-break: break-word;
-    border: 0 solid #dcdcdc;
-    border-bottom-width: 1px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+}
+
+.DocumentCatalogueHeader {
+    padding-top: 20px;
 }
 
 .DocumentCatalogueBody {
     padding: 0;
+}
+
+.CatalogueProjectDesc {
+    font-size: 16px;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.87);
+    padding: 12px;
+
 }
 
 .CloseProjectLink {
@@ -115,12 +102,15 @@
 
 .DocumentCatalogueContainer ul {
     padding-inline-start: 0;
+    padding-inline-end: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
     text-align: left;
 }
 
 .DocumentCatalogueTopFolder {
     overflow: auto;
-    height: calc(87vh - 10px);
+    height: calc(87vh - 4.5rem - 10px);
     margin-block-start: 0;
     margin-block-end: 0;
 }
@@ -182,25 +172,83 @@
     padding: 0.25rem;
 }
 
-.MobileMask {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    z-index: 10;
+.SelectorMain {
+    display: grid;
+    grid-template-columns: auto 26px;
+    border: rgba(0, 0, 0, 0.12) solid 1px;
+    width: 100%;
+    position: relative;
+    border-radius: 2px;
 }
 
-.MobileFileList {
-    box-sizing: border-box;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-    padding: 1rem 2rem;
-    margin-block-start: 0;
-    margin-block-end: 0;
+.SelectedItem {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    text-align: left;
     background-color: white;
-    width: 100%;
-    margin: 3rem 2rem;
+    height: 26px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.SelectionButton {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    border: none;
+    border-left: rgba(0, 0, 0, 0.12) solid 1px;
+}
+
+.SelectorDropList {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 27px;
+    width: calc(100% - 26px - 0.75rem);
+    z-index: 1;
+    background-color: white;
+    word-break: break-word;
+    text-align: left;
+    padding: 5px;
+    border: rgba(0, 0, 0, 0.1) solid 1px;
+    margin-left: -5px;
+}
+
+.SelectorDropList a {
+    color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+@keyframes SelectorExpand {
+    0% {
+        transform: scale(1, 0);
+    }
+    100% {
+        transform: scale(1, 1);
+    }
+}
+
+
+.SelectorExpand {
+    transition: height .3s ease-in;
+    transform-origin: 50% 0;
+    animation: SelectorExpand 0.3s ease-in;
+}
+
+@keyframes SelectorHide {
+    0% {
+        transform: scale(1, 1);
+    }
+    100% {
+        transform: scale(1, 0);
+    }
+}
+
+.SelectorHide{
+    height: 0;
+    transform-origin: 0 0;
+    transition: height .3s ease-out;
+    animation: SelectorHide 0.3s ease-out;
+
+
 }

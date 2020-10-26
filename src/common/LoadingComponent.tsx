@@ -3,7 +3,7 @@ import './LoadingComponent.css';
 
 export class Loading extends React.Component<any, any> {
 
-    private canvas: React.RefObject<HTMLCanvasElement>;
+    private readonly canvas: React.RefObject<HTMLCanvasElement>;
 
     constructor(props: any) {
         super(props);

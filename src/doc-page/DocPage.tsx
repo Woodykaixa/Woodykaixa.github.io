@@ -5,36 +5,45 @@ import "./DocPage.css";
 import {Fetch, ResponsiveComponentProps} from "../common/common";
 import {ProjectItem, DocResponse, ProjectFolder} from "../common/ServerInterface";
 
-interface DocLinkProps {
-    displayName: string,
-    linkName: string
+interface AccessibleProjectProps extends ProjectItem {
 }
 
-class DocLink extends React.Component<DocLinkProps, any> {
+class AccessibleProject extends React.Component<AccessibleProjectProps, any> {
     render() {
-        return <li className="DocLink"><Link
-            to={'/' + this.props.linkName}>{this.props.displayName}</Link></li>;
+        return (
+            <div className='AccessibleProjectItem'>
+                <li className='ProjectItemName'>
+                    <Link to={'/' + this.props.url}>
+                        {this.props.name}
+                    </Link>
+                    <p>
+                        {this.props.description}
+                    </p>
+                </li>
+            </div>
+        );
     }
 }
-
 
 interface ProjectListProps {
     projects: ProjectItem[]
 }
 
 class ProjectList extends React.Component<ProjectListProps, any> {
-
     render() {
         return (
-            <div>
+            <div className='ProjectListContainer'>
                 <ul className="ProjectList">
                     {this.props.projects.map(
                         (doc, index) =>
-                            <DocLink displayName={doc.name}
-                                     linkName={doc.url}
-                                     key={index}/>
+                            <AccessibleProject name={doc.name} url={doc.url}
+                                               description={doc.description}
+                                               key={index}/>
                     )}
                 </ul>
+                <p style={{textAlign: 'right'}}>
+                    <small> 如想获取更多文档的访问权限，请联系管理员。</small>
+                </p>
             </div>
         );
     }
@@ -95,7 +104,8 @@ export class DocPage extends React.Component<DocProps, DocState> {
                                                    files={this.state.projectFiles}
                                                    updateProjectFiles={this.updateProjectFiles}
                                                    screenWidth={this.props.screenWidth}
-                                                   isLargeScreen={this.props.isLargeScreen}/>
+                                                   isLargeScreen={this.props.isLargeScreen}
+                                                   description={project.description}/>
                                 </div>
                             </Route>)}
                         <Route path='/'>
@@ -104,8 +114,6 @@ export class DocPage extends React.Component<DocProps, DocState> {
                     </Switch>
                 </BrowserRouter>
             </div>
-
         );
-
     }
 }

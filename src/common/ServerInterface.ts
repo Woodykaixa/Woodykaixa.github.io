@@ -50,7 +50,8 @@ export interface AdminProfileResponse extends ServerResponse {
 
 export interface ProjectItem {
     name: string,
-    url: string
+    url: string,
+    description: string
 }
 
 export interface DocResponse extends ServerResponse {

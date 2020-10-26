@@ -47,9 +47,8 @@ export class App extends React.Component<any, AppState> {
         const docWidth = document.body.clientWidth;
         this.state = {
             navSites: [
-                {name: '关于', link: '/'},
+                {name: '关于本站', link: '/'},
                 {name: '文档', link: '/docs'},
-                {name: '工具', link: '/tools'},
             ],
             isLoggedInUser: false,
             width: docWidth,
@@ -90,6 +89,7 @@ export class App extends React.Component<any, AppState> {
         const data = new FormData();
         data.append('username', this.state.username);
         data.append('password', this.state.password);
+        let registerSuccess = false;
         await Fetch('/auth/register', 'POST', data).then(res => {
             if (res.ok) {
                 return res.json();
@@ -99,10 +99,11 @@ export class App extends React.Component<any, AppState> {
             if (json.err) {
                 throw new Error(json.data);
             }
-            alert(json.data);
+            registerSuccess = true;
         }).catch(err => {
             console.log(err);
         });
+        return registerSuccess;
     }
 
     userLogin = async () => {
@@ -171,7 +172,8 @@ export class App extends React.Component<any, AppState> {
     render() {
         return (
             <div className="App">
-                <LoginModal loginFunction={this.userLogin} screenWidth={this.state.width}
+                <LoginModal loginFunction={this.userLogin} registerFunction={this.userRegister}
+                            screenWidth={this.state.width}
                             username={this.state.username} password={this.state.password}
                             isLargeScreen={this.state.isLargeScreen}
                             loginModalOpen={this.state.showLoginModal}
@@ -180,7 +182,8 @@ export class App extends React.Component<any, AppState> {
                             nameChanged={this.nameChanged} pwdChanged={this.passwordChanged}/>
                 <BrowserRouter>
                     <NavBar items={this.state.navSites} loggedIn={this.state.isLoggedInUser}
-                            title="卡夏妙妙屋" screenWidth={this.state.width}
+                            username={this.state.username} title="卡夏妙妙屋"
+                            screenWidth={this.state.width}
                             isLargeScreen={this.state.isLargeScreen}
                             openLoginModal={this.openLoginModal}
                             requestLogout={this.userLogout}/>
