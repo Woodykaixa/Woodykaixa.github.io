@@ -90,6 +90,9 @@
       "semi": "warn"
     }
   },
+  "eslintIgnore": [
+    "docs", "config"
+  ],
   "browserslist": {
     "production": [
       ">0.2%",
