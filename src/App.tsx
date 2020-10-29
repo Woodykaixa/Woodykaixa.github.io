@@ -49,6 +49,7 @@ export class App extends React.Component<any, AppState> {
             navSites: [
                 {name: '关于本站', link: '/'},
                 {name: '文档', link: '/docs'},
+                {name: '工具', link: '/tools'}
             ],
             isLoggedInUser: false,
             width: docWidth,
