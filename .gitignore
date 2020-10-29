@@ -8,10 +8,6 @@
 # testing
 /coverage
 
-# production
-/build
-/Woodykaixa.github.io
-
 # misc
 .DS_Store
 .env.local
