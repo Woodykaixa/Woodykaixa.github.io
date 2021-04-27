@@ -31,13 +31,14 @@
     display: flex;
     margin: 0 2rem;
     padding: 5rem;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
+    justify-content: center;
 }
 
 .IndexPageInfo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .IndexPageAvatarBox {
@@ -74,12 +75,12 @@
     color: black;
 }
 
-.IndexPageLinkBox a :hover{
+.IndexPageLinkBox a :hover {
     color: #039BE5;
     text-decoration: underline;
 }
 
-.IndexPageCompanyBox, .IndexPageBlogBox, .IndexPageLocationBox {
+.IndexPageCompanyBox, .IndexPageBlogBox, .IndexPageLocationBox, .IndexPageTotalStarBox {
     font-weight: bold;
 }
 

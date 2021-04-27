@@ -8,6 +8,7 @@ import {faMapMarkedAlt, faCode} from "@fortawesome/free-solid-svg-icons";
 import {faLink} from "@fortawesome/free-solid-svg-icons";
 import {AdminProfileData, AdminProfileResponse, RepoLink} from "../common/ServerInterface";
 import {Loading} from "../common/LoadingComponent";
+import {AppNavBarSiteItem} from '../App';
 
 
 interface RepoTagProps extends RepoLink, ResponsiveComponentProps {
@@ -45,10 +46,12 @@ class RepoTag extends React.Component<RepoTagProps, any> {
 interface IndexPageState extends AdminProfileData {
     fetching: boolean,
     fetchSuccess: boolean,
+    totalStars: number,
+    totalForks: number
 }
 
 interface IndexPageProps extends ResponsiveComponentProps {
-
+    navSites: AppNavBarSiteItem[]
 }
 
 export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
@@ -67,7 +70,9 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
             followers: 0,
             following: 0,
             repoCount: 0,
-            bio: ''
+            bio: '',
+            totalStars: 0,
+            totalForks: 0
         };
     }
 
@@ -101,8 +106,18 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                     repoCount: data.repoCount
                 });
                 data.repos.sort((a, b) => b.star - a.star);
+                const stats = data.repos.reduce((acc, repo) => {
+                    acc.fork += repo.isForked ? 0 : repo.fork;
+                    acc.star += repo.isForked ? 0 : repo.star;
+                    return acc;
+                }, {
+                    fork: 0,
+                    star: 0
+                });
                 this.setState({
-                    repos: data.repos
+                    repos: data.repos,
+                    totalForks: stats.fork,
+                    totalStars: stats.star
                 });
             }
         );
@@ -126,7 +141,7 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                  src="https://avatars1.githubusercontent.com/u/22990333?s=460&amp;u=ab4f382b52aae8a47f29de660ed2b4551e8b1d72&amp;v=4"/>
                         </div>
                         <div className="IndexPageInfoBox">
-                            <h1 className='IndexPageLoginNameBox'>{this.state.loginName}</h1>
+                            <h2 className='IndexPageLoginNameBox'>{this.state.loginName}</h2>
                             <div className="IndexPageCompanyBox">
                                 <FontAwesomeIcon icon={faBuilding}
                                                  style={{width: 16, marginRight: 5}}/>
@@ -147,26 +162,47 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                                  style={{width: 16, marginRight: 5}}/>
                                 {this.state.location}
                             </div>
-
                         </div>
                     </div>
-                </div>
-                <div className="IndexPageContainer">
-                    <h3 className="ParaTitle">我的统计信息</h3>
                     <div className="IndexPageProfBox">
                         <div>
                             <img style={{maxWidth: '100%'}}
-                                 src="https://github-readme-stats.vercel.app/api?username=Woodykaixa&show_icons=true"
+                                 src="https://github-readme-stats.vercel.app/api?username=Woodykaixa&show_icons=true&bg_color=fafafa&hide_border=true"
                                  alt="My stats"/>
                         </div>
                         <div>
                             <img style={{maxWidth: '100%'}}
-                                 src="https://github-readme-stats.vercel.app/api/top-langs/?username=Woodykaixa&layout=compact&hide=html&card_width=439.94"
+                                 src="https://github-readme-stats.vercel.app/api/top-langs/?username=Woodykaixa&layout=compact&hide=html&card_width=439.94&bg_color=fafafa&hide_border=true"
                                  alt="My favorite languages"/>
                         </div>
                     </div>
+                </div>
+                <div className="IndexPageContainer">
+                    <h3 className="ParaTitle">关于本站</h3>
+                    <div className="AboutSiteBlock">
+                        <p>
+                            欢迎来到卡夏妙妙屋。
+                        </p>
+                        <p>
+                            这里是我的个人网站，也是我的网页制作大作业。
+                        </p>
+                        {
+                            this.props.navSites.map(site => {
+                                return <p key={site.name}>
+                                    <b>{site.name}</b>页面
+                                    {site.desc}
+                                </p>;
+                            })
+                        }
+                        <p>
+                            本页面的制作使用了如下组件：React、React-Router、React-Modal、React-Cookies、FontAwesome。
+                            同时，网页风格参考了Material Design，并使用
+                            <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a>
+                            生成统计信息。
+                        </p>
+                    </div>
                     <div className="SplitLine"/>
-                    <h3 className="ParaTitle">我的代码</h3>
+                    <h3 className="ParaTitle">我的项目</h3>
                     <ul className="IndexPageRepoList">
                         {this.state.repos.map((repo, index) =>
                             <li key={index}>
@@ -178,29 +214,11 @@ export class IndexPage extends React.Component<IndexPageProps, IndexPageState> {
                                          isForked={repo.isForked}/>
                             </li>)}
                     </ul>
-                    <h3 className="ParaTitle">关于本站</h3>
-                    <div className="AboutSiteBlock">
-                        <p>
-                            欢迎来到卡夏妙妙屋。
-                        </p>
-                        <p>
-                            这里是我的个人网站，也是我的网页制作大作业。
-                            <b>关于</b>页面展示个人信息以及网站信息；
-                            <b>文档</b>页面可以用于展示我自己参与的项目文档，注册用户根据自己的权限访问相应的文档，同时还有一个公开文档作为博客使用；
-                            <b>工具</b>页面是一些小工具，供部分人使用。
-                        </p>
-                        <p>
-                            本页面的制作使用了如下组件：React、React-Router、React-Modal、React-Cookies、FontAwesome。
-                            同时，网页风格参考了Material Design，并使用
-                            <a href="https://github.com/anuraghazra/github-readme-stats">github-readme-stats</a>
-                            生成统计信息。
-                        </p>
-                        <p style={{marginTop: 20, textAlign: 'right', paddingRight: 10}}>
-                            <small>
-                                Copyright ©2020 Woodykaixa. All rights reserved.
-                            </small>
-                        </p>
-                    </div>
+                    <p style={{marginTop: 20, textAlign: 'right', paddingRight: 10}}>
+                        <small>
+                            Copyright © 2020-2021 Woodykaixa. All rights reserved.
+                        </small>
+                    </p>
                 </div>
             </div>
         );

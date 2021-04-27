@@ -15,9 +15,10 @@ import {
 } from "./common/ServerInterface";
 import cookie from 'react-cookies';
 
-interface AppNavBarSiteItem {
+export interface AppNavBarSiteItem {
     name: string,
-    link: string
+    link: string,
+    desc: string
 }
 
 interface AppState {
@@ -46,10 +47,18 @@ export class App extends React.Component<any, AppState> {
         super(props);
         const docWidth = document.body.clientWidth;
         this.state = {
-            navSites: [
-                {name: '关于本站', link: '/'},
-                {name: '文档', link: '/docs'},
-                {name: '工具', link: '/tools'}
+            navSites: [{
+                name: '关于',
+                link: '/',
+                desc: '展示个人信息以及网站信息'
+            }, {
+                name: '文章',
+                link: '/docs',
+                desc: '用于展示我自己参与的项目文档，注册用户根据自己的权限访问相应的文档，同时还有一个公开文档作为博客使用'
+            },
+                // {
+                //     name: '工具', link: '/tools', desc: '有一些小工具，供部分人使用'
+                // }
             ],
             isLoggedInUser: false,
             width: docWidth,
@@ -205,7 +214,8 @@ export class App extends React.Component<any, AppState> {
                             </Route>
                             <Route path="/">
                                 <IndexPage screenWidth={this.state.width}
-                                           isLargeScreen={this.state.isLargeScreen}/>
+                                           isLargeScreen={this.state.isLargeScreen}
+                                           navSites={this.state.navSites}/>
                             </Route>
                         </Switch>
                     </div>

@@ -227,6 +227,7 @@ class DocumentCatalogue extends React.Component<DocumentCatalogueProps, Document
     onFileItemClick = (e: React.SyntheticEvent) => {
         e.preventDefault();
         const target = e.nativeEvent.target as HTMLLIElement;
+        console.log("onFileItemClick:", target);
         const link = (target.parentElement as HTMLAnchorElement).href;
         const fileType = link.substring(link.length - 3) === '.md' ? 'markdown' : 'text';
         const name = link.substr(link.lastIndexOf('/') + 1);
@@ -283,6 +284,7 @@ class DocumentCatalogue extends React.Component<DocumentCatalogueProps, Document
                 <nav className="DocumentCatalogueContainer">
                     <header className="DocumentCatalogueHeader">
                         <div>{this.props.project}</div>
+                        <div className="DocumentCatalogueDesc">{this.props.description}</div>
                     </header>
                     <div className="DocumentCatalogueBody">
                         <ul className="DocumentCatalogueTopFolder">
